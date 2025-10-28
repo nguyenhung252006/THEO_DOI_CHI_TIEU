@@ -1,0 +1,36 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--default-layout-header-height);
+  background-color: rgba(214, 186, 186, 0.75);
+  z-index: 1000;
+}
+
+.avatar {
+  position: absolute;
+  left: 80%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.avatar-wrapper {
+  display: flex;
+  align-items: center; 
+  gap: 20px; 
+}
+
+.avatar-img {
+  width: 40px;
+  border: 2px solid;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.avatar-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
