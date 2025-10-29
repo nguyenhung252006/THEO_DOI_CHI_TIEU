@@ -2,7 +2,7 @@ import { useState } from "react";
 
 //import css
 import classNames from "classnames/bind";
-import style from "./MenuItems.scss";
+import style from "./MenuItems.module.scss";
 
 //import component
 import Button from "../Button/Button";

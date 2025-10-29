@@ -1,7 +1,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    
+    justify-content: space-between;
 }
 
 .container {
@@ -11,16 +11,20 @@
 }
 
 .sidebar {
-    flex: 2;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid wheat ;
+    border-right: 1px solid wheat;
     overflow-y: auto;
+
+    position: sticky;
+    top: var(--default-layout-header-height);
+    height: calc(100vh - var(--default-layout-header-height));
 }
 
 .content {
     position: relative;
-    flex: 10;
+    flex: 7;
     min-height: 1000px;
     background-color: rgb(255, 255, 255);
 }
