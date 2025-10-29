@@ -1,0 +1,54 @@
+.wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 12px 24px;
+
+    p {
+        margin: 12px 12px;
+        border-bottom: 1px solid wheat;
+    }
+}
+
+.wrapper-info {
+    border: 1px solid wheat;
+    padding: 10px 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(199, 182, 182, 0.8);
+}
+
+.text-name {
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(90deg,
+            red,
+            orange,
+            yellow,
+            green,
+            cyan,
+            blue,
+            violet,
+            red);
+    user-select: none;
+    background-size: 400%;
+    text-shadow: 0 0 12px rgb(253, 247, 247);
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradientMove 5s linear infinite;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.text-email {}
+
+.text-sodu {}
+
+.text-dasudung {}

@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-y: auto ;
 }
 
 .container {
@@ -10,11 +11,14 @@
     margin-top: var(--default-layout-header-height);
 }
 
+
+
 .sidebar {
+    width: 124px;
     flex: 1;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid wheat;
+    border-right: 1px solid rgb(233, 233, 221);
     overflow-y: auto;
 
     position: sticky;
@@ -25,6 +29,8 @@
 .content {
     position: relative;
     flex: 7;
-    min-height: 1000px;
+    max-height: 1000px;
     background-color: rgb(255, 255, 255);
+    overflow-x: hidden;
+    overflow-y: auto;
 }

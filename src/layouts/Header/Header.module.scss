@@ -4,8 +4,9 @@
   left: 0;
   width: 100%;
   height: var(--default-layout-header-height);
-  background-color: rgba(214, 186, 186, 0.75);
+  background-color: rgba(205, 221, 197, 0.75);
   z-index: 1000;
+  border: 1px solid rgb(173, 173, 173);
 }
 
 .avatar {
