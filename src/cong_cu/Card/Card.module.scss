@@ -51,6 +51,20 @@
     flex-direction: row;
     justify-content: space-between;
     box-shadow: 0 0 15px rgba(199, 182, 182, 0.8);
-    margin-left: 24px;
-    margin-left: 12px;
+    margin: 0 12px;
 }
+
+.wrapper-content-items-center {
+    width: 100%;
+    min-height: 200px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid rgb(128, 34, 34);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(199, 182, 182, 0.8);
+    margin: 0 12px;
+}
+

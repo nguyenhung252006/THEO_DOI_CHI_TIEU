@@ -1,6 +1,7 @@
 import Card from "../../cong_cu/Card/Card";
 import { TextProfile } from "../../cong_cu";
-import Bieu_do_cot from "../../cong_cu/Bieu_do_cot/Bieu_do_cot";
+import BieuDo from '../../cong_cu/Bieu_do_cot/Bieu_do_cot';
+
 
 import classNames from "classnames/bind";
 import style from './Trang_chu.module.scss'
@@ -21,7 +22,7 @@ function Trang_chu() {
                     <h1>Gioi thieu</h1>
                 </Card>
                 <Card className={'wrapper-small-long'}>
-                    <h1>Content</h1>
+                    <h1>Thong bao</h1>
                 </Card>
             </div>
 
@@ -40,16 +41,21 @@ function Trang_chu() {
                 <SwiperSlide><Card className={'wrapper-square'}></Card></SwiperSlide>
                 <SwiperSlide><Card className={'wrapper-square'}></Card></SwiperSlide>
                 <SwiperSlide><Card className={'wrapper-square'}></Card></SwiperSlide>
-                
+
             </Swiper>
 
             <div className={cx('wrapper')}>
                 <Card className={'wrapper-content'}>
                     <Card>
-                        <TextProfile />
+                        <TextProfile
+                            name={'Nguyen Van A'}
+                            email={'nguyenvana@gmail.com'}
+                            soDu={'10000'}
+                            daSuDung={'1000'}
+                            />
                     </Card>
                     <Card className={'wrapper-small'}>
-                        <Bieu_do_cot/>
+                        <BieuDo />
                     </Card>
                 </Card>
             </div>

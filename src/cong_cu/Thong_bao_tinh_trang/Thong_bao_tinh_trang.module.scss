@@ -1,0 +1,58 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 24px 24px;
+    overflow: hidden;
+}
+
+.wrapper-content {
+    border-top: 1px solid wheat;
+    margin: 12px 12px;
+    font-weight: 600;
+    min-height: 100px;
+    max-height: 160px;
+    max-width: 1000px;
+    min-width: 500px;
+    overflow-y: auto;
+    border: 1x solid wheat;
+    border-right: 1px solid wheat;
+    border-bottom: 1px solid wheat;
+    border-left: 1px solid wheat;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+
+    p {
+        margin: 12px 12px;
+    }
+}
+
+
+.wrapper-content-bien-dong {
+    border-top: 1px solid wheat;
+    margin: 12px 0px;
+    overflow-y: auto;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+
+}
+
+.primary {
+    color: var(--primary);
+}
+
+.good {
+    color: var(--good);
+}
+
+.none {
+    font-weight: 100;
+
+}
+
+.margin-content{
+    margin: 12px 12px;
+}
