@@ -18,11 +18,13 @@ function Thong_tin() {
         <>
             <div className={cx('wrapper')}>
 
-                <Card className={'wrapper-content'}>
-                    <TextProfile
-                        name={'Nguyen Van A'}
-                        email={'Nguyen Van A'}
-                    />
+                <Card className={'wrapper-content-items-center'}>
+                    <div>
+                        <TextProfile
+                            name={'Nguyen Van A'}
+                            email={'Nguyen Van A'}
+                        />
+                    </div>
                 </Card>
 
 
