@@ -27,13 +27,15 @@ function Thong_tin() {
 
 
                 <Card className={'wrapper-content-items-center'}>
-                    <TextProfile
-                        id={'100'}
-                        sdt={'0123456789'}
-                        email={'nguyenvana@gmail.com'}
-                        soDu={'1000'}
-                        daSuDung={'11000'}
-                    />
+                    <div>
+                        <TextProfile
+                            id={'100'}
+                            sdt={'0123456789'}
+                            email={'nguyenvana@gmail.com'}
+                            soDu={'1000'}
+                            daSuDung={'11000'}
+                        />
+                    </div>
                 </Card>
 
                 <div>

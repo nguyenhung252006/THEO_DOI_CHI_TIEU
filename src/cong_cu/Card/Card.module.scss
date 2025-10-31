@@ -9,7 +9,6 @@
     justify-content: center;
     margin: 10px 24x 10px 24px;
     box-shadow: 0 0 15px rgba(199, 182, 182, 0.8);
-    margin: 12px 24px;
 }
 
 .wrapper-small {
@@ -29,6 +28,7 @@
     flex: 0 0 auto;
     width: 200px;
     height: 200px;
+    min-height: 200px;
     max-height: 200px;
     overflow-y: auto;
     border: 1px solid rgb(128, 34, 34);
@@ -52,6 +52,7 @@
     justify-content: space-between;
     box-shadow: 0 0 15px rgba(199, 182, 182, 0.8);
     margin: 0 12px;
+    margin-top: 24px;
 }
 
 .wrapper-content-items-center {
@@ -62,9 +63,15 @@
     border: 1px solid rgb(128, 34, 34);
     border-radius: 10px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     box-shadow: 0 0 15px rgba(199, 182, 182, 0.8);
     margin: 0 12px;
+    margin-top: 24px;
+    align-items: center;
+    align-content: center;
+    display: block;
 }
+
+
 

@@ -1,4 +1,6 @@
-import { Dang_xuat, Dinh_muc, Muc_chi_tieu, Thong_tin, Tong_quan, Trang_chu } from "../../components";
+import { Dang_xuat, Dinh_muc, Thong_tin, Tong_quan, Trang_chu } from "../../components";
+import { Muc_chi_tieu_an_uong } from "../../components/Muc_chi_tieu";
+
 
 const Thu_muc_sidebar = [
     {
@@ -13,12 +15,12 @@ const Thu_muc_sidebar = [
     },
     {
         title: "Mục chi tiêu",
-        path: "/Muc_chi_tieu",
-        component: Muc_chi_tieu,
+        path: null,
         children: [
             {
                 title: '-- Ăn Uống --',
                 path: "/Muc_chi_tieu/An_uong",
+                component : Muc_chi_tieu_an_uong,
             },
             {
                 title: '-- Mua sắm --',
