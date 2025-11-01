@@ -5,7 +5,7 @@ import style from './Text_chi_tieu.module.scss'
 import Card from "../Card/Card";
 
 const cx = classNames.bind(style)
-function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu }) {
+function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu, nhapLieu }) {
     return (
         <>
             <div className={cx('wrapper-page')}>
@@ -27,7 +27,7 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu }) {
                                     <div>
                                         <label htmlFor="so-tien"> nhập số tiền: </label>
                                         <input id="so-tien"></input>
-                                        <label htmlFor="ghi-chu"> Ghi chú ( nếu có ): </label>
+                                        <label htmlFor="ghi-chu"> {nhapLieu}: </label>
                                         <input id="ghi-chu"></input>
                                         <button className={cx('btn-submit')}>Xác Nhận</button>
                                     </div>
@@ -42,31 +42,38 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu }) {
                             'margin': '12px 12px',
                             'fontWeight': '600',
                         }}>Lịch sử đã thêm</h1>
-                        <div style={{
-                            margin: '12px 12px',
-                            fontWeight: 600,
-                            width: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                        }}>
-                            <span style={{
-                                minWidth: '400px',
-                                color: 'green',
-                                minHeight: '100px',
-                                maxHeight: '400px',
-                                overflowY: 'auto',
-                                borderTop: '1px solid wheat',
-                                borderBottom: '1px solid wheat',
-                                borderLeft: '1px solid wheat',
-                                borderRight: '1px solid wheat',
-                                borderRadius: '10px',
-                                padding :'12px 12px',
-                                boxShadow: '0 0 12px rgb(253, 247, 247)',
-                            }}>{daThem}</span>
-                            {ghiChu && <span>Ghi chú: {ghiChu}</span>}
+                        <div
+                            style={{
+                                margin: '12px 12px',
+                                fontWeight: 600,
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                            }}
+                        >
+                            <div
+                                style={{
+                                    minWidth: '400px',
+                                    maxWidth: '100%',
+                                    color: 'green',
+                                    minHeight: '100px',
+                                    maxHeight: '400px',
+                                    overflowY: 'auto',
+                                    border: '1px solid wheat',
+                                    borderRadius: '10px',
+                                    padding: '12px 12px',
+                                    boxShadow: '0 0 12px rgb(253, 247, 247)',
+                                }}
+                            >
+                                {daThem && !ghiChu && <span>{daThem}</span>}
+                                {daThem && ghiChu && (
+                                    <span>
+                                        {daThem}, <span style={{ color: 'black' }}>Ghi chú: {ghiChu}</span>
+                                    </span>
+                                )}
+                            </div>
                         </div>
-
                     </div>
                 </Card >
             </div >

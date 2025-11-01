@@ -15,10 +15,12 @@ function Muc_chi_tieu_mua_sam({ children }) {
     return (
         <div className={cx('wrapper')}>
             {<ContentChiTieu
+                nhapLieu={'Ghi chú ( nếu có )'}
                 tenMuc={'Mua Sắm'}
                 daSuDung={'10000'}
                 PhanTramDaSuDung={'10'}
-                daThem={item}
+                daThem={'1000'}
+                ghiChu={'helo kiti'}
             />}
         </div>
     );

@@ -7,7 +7,7 @@ const cx = classNames.bind(style)
 function Thong_bao_tinh_trang({ sodu, daSuDung, className, dauRa, dauVao }) {
     return (
         <div className={cx('wrapper')}>
-            <h1 style={{'margin' : '12px'}}>Số dư</h1>
+            <h1 style={{'margin' : '12px'}}>Thông tin</h1>
             <div className={cx('wrapper-content')}>
                 <>
                     {sodu && (

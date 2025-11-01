@@ -21,7 +21,7 @@ function Trang_chu() {
                 <Card className={'wrapper-small'}>
                     <h1>Gioi thieu</h1>
                 </Card>
-                <Card className={'wrapper-small-long'}>
+                <Card className={'wrapper-small'}>
                     <h1>Thong bao</h1>
                 </Card>
             </div>

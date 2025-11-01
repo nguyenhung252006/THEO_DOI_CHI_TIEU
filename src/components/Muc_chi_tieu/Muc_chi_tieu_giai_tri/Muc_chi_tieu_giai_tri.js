@@ -6,16 +6,17 @@ import style from './Muc_chi_tieu_giai_tri.module.scss'
 import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
 
 const cx = classNames.bind(style)
-function Muc_chi_tieu_giai_tri({}) {
-    return ( 
+function Muc_chi_tieu_giai_tri({ }) {
+    return (
         <div className={cx('wrapper')}>
             {<ContentChiTieu
+                nhapLieu={'Ghi chú ( nếu có )'}
                 tenMuc={'Giải trí'}
                 daSuDung={'10000'}
                 PhanTramDaSuDung={'10'}
             />}
         </div>
-     );
+    );
 }
 
 export default Muc_chi_tieu_giai_tri;
