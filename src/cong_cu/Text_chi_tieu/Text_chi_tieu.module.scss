@@ -1,3 +1,10 @@
+.wrapper-page{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    box-sizing: content-box;
+}
+
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -71,7 +78,7 @@ input {
     box-shadow: 0 0 12px rgb(185, 183, 179);
     height: 32px;
     border-radius: 12px;
-    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 4px 4px;
     transition: linear 0.5s;
 
@@ -81,7 +88,7 @@ input {
 }
 
 .btn-submit {
-    margin-top: 24px;
+    margin-top: 10px;
     border: 1px solid green;
     border-radius: 6000px;
     padding: 12px 12px;
