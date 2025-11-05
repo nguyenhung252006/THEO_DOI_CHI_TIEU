@@ -3,12 +3,12 @@ import style from './Muc_chi_tieu_khac.module.scss'
 
 //import component
 import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
-
 const cx = classNames.bind(style)
 function Muc_chi_tieu_khac({}) {
     return ( 
         <div className={cx('wrapper')}>
             {<ContentChiTieu
+                isKhac
                 nhapLieu={'Ghi chú ( nếu có )'}
                 tenMuc={'Khác'}
                 daSuDung={'10000'}

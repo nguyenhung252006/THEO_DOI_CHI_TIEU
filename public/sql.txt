@@ -1,44 +1,46 @@
--- 1. Tạo database
-CREATE DATABASE IF NOT EXISTS QuanLyChiTieu;
-USE QuanLyChiTieu;
+-- Tạo cơ sở dữ liệu
+CREATE DATABASE IF NOT EXISTS theo_doi_chi_tieu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE theo_doi_chi_tieu;
 
--- 2. Bảng NguoiDung
-CREATE TABLE IF NOT EXISTS NguoiDung (
+-- 1️⃣ Bảng người dùng
+CREATE TABLE nguoi_dung (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tai_khoan VARCHAR(50) NOT NULL UNIQUE,
     mat_khau VARCHAR(255) NOT NULL,
-    avatar VARCHAR(255)
+    email VARCHAR(100) NOT NULL UNIQUE,
+    ho_ten VARCHAR(100),
+    ngay_sinh DATE,
+    so_dien_thoai VARCHAR(15),
+    ngay_tao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 3. Bảng ThongTin
-CREATE TABLE IF NOT EXISTS ThongTin (
+-- 2️⃣ Bảng chi tiêu (mỗi khoản chi tiêu là một hàng riêng)
+CREATE TABLE chi_tieu (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    ten VARCHAR(50) NOT NULL,
-    ngay_sinh DATE NOT NULL,
-    tuoi INT,
-    email VARCHAR(100),
-    so_tien_ban_dau DECIMAL(15,2),
-    avatar VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES NguoiDung(id) ON DELETE CASCADE
+    id_nguoi_dung INT NOT NULL,
+    loai_chi_tieu ENUM('Ăn uống', 'Mua sắm', 'Giải trí') NOT NULL,
+    so_tien DECIMAL(15,2) NOT NULL,
+    ghi_chu VARCHAR(255),
+    thoi_gian_nhap DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_nguoi_dung) REFERENCES nguoi_dung(id) ON DELETE CASCADE
 );
 
--- 4. Bảng MucChiTieu
-CREATE TABLE IF NOT EXISTS MucChiTieu (
+-- 3️⃣ Bảng chi tiêu khác (người dùng tự tạo loại chi tiêu và giá trị)
+CREATE TABLE chi_tieu_khac (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    an_uong DECIMAL(15,2) DEFAULT 0,
-    quan_ao DECIMAL(15,2) DEFAULT 0,
-    mua_sam DECIMAL(15,2) DEFAULT 0,
-    giai_tri DECIMAL(15,2) DEFAULT 0,
-    FOREIGN KEY (user_id) REFERENCES NguoiDung(id) ON DELETE CASCADE
+    id_nguoi_dung INT NOT NULL,
+    ten_khoan VARCHAR(100) NOT NULL,
+    so_tien DECIMAL(15,2) NOT NULL,
+    thoi_gian_nhap DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_nguoi_dung) REFERENCES nguoi_dung(id) ON DELETE CASCADE
 );
 
--- 5. Bảng MucChiTieuKhac
-CREATE TABLE IF NOT EXISTS MucChiTieuKhac (
+-- 4️⃣ Bảng định mức chi tiêu
+CREATE TABLE dinh_muc_chi_tieu (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    ten_hoat_dong VARCHAR(100) NOT NULL,
-    so_tien DECIMAL(15,2) DEFAULT 0,
-    FOREIGN KEY (user_id) REFERENCES NguoiDung(id) ON DELETE CASCADE
+    id_nguoi_dung INT NOT NULL,
+    so_tien_dinh_muc DECIMAL(15,2) NOT NULL,
+    so_ngay INT NOT NULL,
+    ngay_luu DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_nguoi_dung) REFERENCES nguoi_dung(id) ON DELETE CASCADE
 );

@@ -4,7 +4,7 @@ import style from './Thong_tin.module.scss'
 //import cong_cu
 import Card from "../../cong_cu/Card/Card";
 import { TextProfile } from "../../cong_cu";
-import BieuDo from '../../cong_cu/Bieu_do_cot/Bieu_do_cot';
+import BieuDo from '../../cong_cu/Bieu_do_tron/Bieu_do_tron';
 import ThongBaoTinhTrang from "../../cong_cu/Thong_bao_tinh_trang/Thong_bao_tinh_trang";
 
 
@@ -41,9 +41,9 @@ function Thong_tin() {
                 </Card>
 
                 <div>
-                    <Card className={'wrapper-content'}>
+                    {/* <Card className={'wrapper-content'}>
                         <BieuDo />
-                    </Card>
+                    </Card> */}
                 </div>
             </div>
             <div className={cx('wrapper')} >

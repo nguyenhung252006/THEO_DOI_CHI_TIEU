@@ -5,7 +5,7 @@ import style from './Text_chi_tieu.module.scss'
 import Card from "../Card/Card";
 
 const cx = classNames.bind(style)
-function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu, nhapLieu }) {
+function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu, nhapLieu, isKhac = false }) {
     return (
         <>
             <div className={cx('wrapper-page')}>
@@ -29,6 +29,12 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu, nha
                                         <input id="so-tien"></input>
                                         <label htmlFor="ghi-chu"> {nhapLieu}: </label>
                                         <input id="ghi-chu"></input>
+                                        {isKhac && (
+                                            <>
+                                                <label htmlFor="ten-khoan-chi"> Tên khoản chi: </label>
+                                                <input id="ten-khoan-chi"></input>
+                                            </>
+                                        )}
                                         <button className={cx('btn-submit')}>Xác Nhận</button>
                                     </div>
                                 </div>
