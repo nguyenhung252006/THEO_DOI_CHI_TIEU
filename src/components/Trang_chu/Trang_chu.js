@@ -17,6 +17,9 @@ import axios from "axios";
 // import Hook React
 import { useState, useEffect } from "react";
 
+//import API_BASE_URL
+import { API_BASE_URL,API_ENDPOINTS } from "../../config";
+
 const cx = classNames.bind(style)
 function Trang_chu() {
 
@@ -27,7 +30,7 @@ function Trang_chu() {
     // lay thong tin nguoi dung
     const dataThongTinNguoiDung = async () => {
         try {
-            const res = await axios.get("http://localhost:8080/api/nguoi-dung/1", { withCredentials: true })
+            const res = await axios.get(API_ENDPOINTS.USERS, { withCredentials: true })
 
             const chiTieu = res.data.chi_tieu.map(item => Number(item.soTien));
             const chiTieuKhac = res.data.chi_tieu_khac.map(item => Number(item.soTien));

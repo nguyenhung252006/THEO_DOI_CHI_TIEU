@@ -26,10 +26,16 @@ function TextProfile({ name, email, soDu, sdt, daSuDung, id }) {
                             <p className={cx('text-sdt')}>Số điện thoại: {sdt}</p>
                         </>
                     }
-                    {soDu &&
+                    {soDu !== 0 ? (
                         <>
                             <p className={cx('text-sodu')}>Số dư: {soDu}</p>
                         </>
+                    ) : (
+                        <>
+                            <p className={cx('text-sodu')}>Số dư: 0</p>
+                        </>
+                    )
+                        
                     }
                     {daSuDung &&
                         <>
