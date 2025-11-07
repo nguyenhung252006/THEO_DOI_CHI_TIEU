@@ -1,7 +1,8 @@
 import classNames from "classnames/bind";
 import style from './Thong_bao_tinh_trang.module.scss'
 
-
+//import ho tro
+import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
 const cx = classNames.bind(style)
 function Thong_bao_tinh_trang({ sodu, daSuDung, className, dauRa, dauVao, dateVao, dateRa }) {
@@ -11,16 +12,16 @@ function Thong_bao_tinh_trang({ sodu, daSuDung, className, dauRa, dauVao, dateVa
             <div className={cx('wrapper-content')}>
                 <>
                     {sodu !== 0 ? (
-                        <p>Số dư: <span className={cx(className)}>{sodu} VNĐ</span></p>
+                        <p>Số dư: <span className={cx(className)}>{chuyenDinhDangTien(sodu)} VNĐ</span></p>
                     ) : (
                         <>
-                            <p>Số dư: <span className={cx(className)}>{sodu} VNĐ</span></p>
+                            <p>Số dư: <span className={cx(className)}>{chuyenDinhDangTien(sodu)} VNĐ</span></p>
                         </>
                     )}
                 </>
                 <>
                     {daSuDung && (
-                        <p>Đã sử dụng: <span className={cx(className)}>{daSuDung} VNĐ</span></p>
+                        <p>Đã sử dụng: <span className={cx(className)}>{chuyenDinhDangTien(daSuDung)} VNĐ</span></p>
                     )}
                 </>
             </div>
@@ -29,7 +30,7 @@ function Thong_bao_tinh_trang({ sodu, daSuDung, className, dauRa, dauVao, dateVa
                     <h1 className={cx('good')}>Biến động đầu vào</h1>
                     <div className={cx('wrapper-content')}>
                         {dauVao && dauVao.length > 0 ? (
-                            <>{dauVao}</>
+                            <>{((dauVao))}</>
                         ) : (
                             <p className={cx('none')}>Không có biến động gần đây</p>
                         )}

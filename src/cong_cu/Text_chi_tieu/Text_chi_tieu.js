@@ -4,8 +4,13 @@ import style from './Text_chi_tieu.module.scss'
 //import component
 import Card from "../Card/Card";
 
+// import ho tro  
+import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
+
 const cx = classNames.bind(style)
-function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu, nhapLieu, isKhac = false }) {
+function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, isKhac = false,
+    onChangeSoTien, onChangeGhiChu, onSubmit, valueSoTien, valueGhiChu
+}) {
     return (
         <>
             <div className={cx('wrapper-page')}>
@@ -14,7 +19,7 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu, nha
                         <div className={cx('wrapper')}>
                             <h1 className={cx('name-page')}>{tenMuc}</h1>
                             <div className={cx('content')}>
-                                <p>Đã sử dụng: <span className={cx('use')}>{daSuDung}</span></p>
+                                <p>Đã sử dụng: <span className={cx('use')}>{chuyenDinhDangTien(daSuDung)} VNĐ</span></p>
                                 <p>Số phần trăm đã sử dụng so với định mức (%): <span className={cx('phan-tram')}>{PhanTramDaSuDung}%</span></p>
                             </div>
                         </div>
@@ -26,16 +31,25 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu, nha
                                 <div className={cx('input-submit')}>
                                     <div>
                                         <label htmlFor="so-tien"> nhập số tiền: </label>
-                                        <input id="so-tien"></input>
+                                        <input id="so-tien"
+                                            onChange={onChangeSoTien}
+                                            value={valueSoTien}
+                                            required
+                                        ></input>
                                         <label htmlFor="ghi-chu"> {nhapLieu}: </label>
-                                        <input id="ghi-chu"></input>
+                                        <input id="ghi-chu"
+                                            onChange={onChangeGhiChu}
+                                            value={valueGhiChu}
+                                        ></input>
                                         {isKhac && (
                                             <>
                                                 <label htmlFor="ten-khoan-chi"> Tên khoản chi: </label>
                                                 <input id="ten-khoan-chi"></input>
                                             </>
                                         )}
-                                        <button className={cx('btn-submit')}>Xác Nhận</button>
+                                        <button className={cx('btn-submit')}
+                                            onClick={onSubmit}
+                                        >Xác Nhận</button>
                                     </div>
                                 </div>
                             </div>
@@ -72,12 +86,7 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, daThem, ghiChu, nha
                                     boxShadow: '0 0 12px rgb(253, 247, 247)',
                                 }}
                             >
-                                {daThem && !ghiChu && <span>{daThem}</span>}
-                                {daThem && ghiChu && (
-                                    <span>
-                                        {daThem}, <span style={{ color: 'black' }}>Ghi chú: {ghiChu}</span>
-                                    </span>
-                                )}
+                                {lichSu}
                             </div>
                         </div>
                     </div>

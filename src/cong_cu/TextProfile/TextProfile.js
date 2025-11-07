@@ -1,7 +1,8 @@
 import classNames from "classnames/bind";
 import style from './TextProfile.module.scss'
 
-
+// import ho tro
+import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
 const cx = classNames.bind(style)
 function TextProfile({ name, email, soDu, sdt, daSuDung, id }) {
@@ -28,7 +29,7 @@ function TextProfile({ name, email, soDu, sdt, daSuDung, id }) {
                     }
                     {soDu !== 0 ? (
                         <>
-                            <p className={cx('text-sodu')}>Số dư: {soDu}</p>
+                            <p className={cx('text-sodu')}>Số dư: {chuyenDinhDangTien(soDu)} VNĐ</p>
                         </>
                     ) : (
                         <>
@@ -39,7 +40,7 @@ function TextProfile({ name, email, soDu, sdt, daSuDung, id }) {
                     }
                     {daSuDung &&
                         <>
-                            <p className={cx('text-dasudung')}>Đã sử dụng: {daSuDung}</p>
+                            <p className={cx('text-dasudung')}>Đã sử dụng: {chuyenDinhDangTien(daSuDung)} VNĐ</p>
                         </>
                     }
                 </div>

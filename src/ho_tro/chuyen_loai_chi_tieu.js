@@ -10,7 +10,7 @@ const chuyenLoaiChiTieu = (a) =>{
             return 'Ăn Uống'
             break
         default:
-            return ""
+            return a
             break
     }
 }

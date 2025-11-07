@@ -5,6 +5,7 @@ import style from './Thong_tin.module.scss'
 import Card from "../../cong_cu/Card/Card";
 import { TextProfile } from "../../cong_cu";
 import ThongBaoTinhTrang from "../../cong_cu/Thong_bao_tinh_trang/Thong_bao_tinh_trang";
+
 // import hook
 import { useState, useEffect } from "react";
 
@@ -18,6 +19,7 @@ import { API_BASE_URL, API_ENDPOINTS } from "../../config";
 // ho tro
 import chuyenNgay from "../../ho_tro/chuyen_ngay";
 import chuyenLoaiChiTieu from "../../ho_tro/chuyen_loai_chi_tieu";
+import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
 const cx = classNames.bind(style)
 function Thong_tin() {
@@ -56,9 +58,18 @@ function Thong_tin() {
                     date: item.thoiGianNhap,
                 }
             })
-            setTienRa(mucChiTieuDauRa)
 
-            console.log(mucChiTieuDauRa)
+            const mucChiTieuDauRaKhac = res.data.chi_tieu_khac.map(item => {
+                return {
+                    tien: item.soTien,
+                    date: item.thoiGianNhap,
+                    loaiChiTieu: item.tenKhoan,
+                }
+            })
+
+            setTienRa([...mucChiTieuDauRa,...mucChiTieuDauRaKhac])
+
+
             // set thong tin nguoi dung
             setProfile(res.data.nguoi_dung);
             setDaSuDung(tongDaSuDung);
@@ -72,7 +83,6 @@ function Thong_tin() {
         dataThongTinNguoiDung()
     }, [])
 
-    console.log(tienRa)
 
     return (
         <>
@@ -115,7 +125,7 @@ function Thong_tin() {
                         dauVao={tienVao.map((item, index) => (
                             <div key={index}>
                                 <div className={cx('text-content')}>
-                                    <span>{item.tien}</span>
+                                    <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
                                     {'--date--'}
                                     <span>{chuyenNgay(item.date)}</span>
                                 </div>
@@ -125,7 +135,7 @@ function Thong_tin() {
                         dauRa={tienRa.map((item, index) => (
                             <div key={index}>
                                 <div className={cx('text-content')}>
-                                    <span>{item.tien}</span>
+                                    <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
                                     {'--date--'}
                                     <span>{chuyenNgay(item.date)}</span>
                                     {'--type--'}
