@@ -9,7 +9,7 @@ const Bieu_do_tron = ({ dataCompare }) => {
 
   const data = [
     { name: 'Đã sử dụng', value: item.value1 },
-    { name: 'Số dư', value: item.value2 },
+    { name: 'Còn lại', value: item.value2 },
   ];
 
   return (

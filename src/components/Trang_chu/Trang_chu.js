@@ -18,7 +18,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 //import API_BASE_URL
-import { API_BASE_URL,API_ENDPOINTS } from "../../config";
+import { API_BASE_URL, API_ENDPOINTS } from "../../config";
+
+//import ho tro
+import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
 const cx = classNames.bind(style)
 function Trang_chu() {
@@ -26,6 +29,9 @@ function Trang_chu() {
     const [profile, setProfile] = useState(null)
     const [soDu, setSoDu] = useState([])
     const [daSuDung, setDaSuDung] = useState([])
+
+    //state tinh con lai 
+    const [conLai, setConLai] = useState([])
 
     // lay thong tin nguoi dung
     const dataThongTinNguoiDung = async () => {
@@ -52,6 +58,10 @@ function Trang_chu() {
         dataThongTinNguoiDung()
     }, [])
 
+    // tinh so du
+    useEffect(() => {
+        setConLai(Number(soDu - daSuDung))
+    }, [soDu, daSuDung])
 
     return (
         <>
@@ -94,12 +104,18 @@ function Trang_chu() {
                             />}
                         </Card>
                         <Card className={'wrapper-square-big'}>
-                            <BieuDo
+                            {conLai > 0 ? (<BieuDo
                                 dataCompare={[
-                                    { name: 'Chi tiêu', value1: daSuDung, value2: soDu }
+                                    { name: 'Chi tiêu', value1: daSuDung, value2: (conLai) }
                                 ]}
-                            />
-    
+                            />) : (
+                                <>
+                                    <div className={cx('warning')}>
+                                        <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
+                                    </div>
+                                </>
+                            )}
+
                         </Card>
                     </div>
                 </Card>

@@ -23,31 +23,36 @@ function Muc_chi_tieu_mua_sam({ children }) {
     // state quan ly thong tin
     const [soDu, setSoDu] = useState([])
     const [daDung, setDaDung] = useState([])
-    const [phanTram, setPhanTram] = useState(0)
+    const [phanTram, setPhanTram] = useState([])
     // state lay thong bao
     const [thongBao, setThongBao] = useState([])
     // sate quan ly thong tin Post
-    const [soTien, setSoTien] = useState(0)
+    const [soTien, setSoTien] = useState([])
     const [ghiChu, setGhiChu] = useState(null)
-    const [data, setData] = useState({
-        loaiChiTieu: "MUA_SAM",
-        soTien: "",
-        ghiChu: '',
-    })
 
     // Post du lieu mua sam
-    const PostMuaSam = async () => {
+    const PostMuaSam = async (dataToPost) => {
         try {
-            await axios.post(`${API_ENDPOINTS.CHITIEU}/1`, data, { withCredentials: true })
+            await axios.post(`${API_ENDPOINTS.CHITIEU}/1`, dataToPost, { withCredentials: true })
             setSoTien('')
             setGhiChu('')
             alert('OK!')
+
+            //set lai state
+            dataMuaSam()
         } catch (error) { console.error('Post Error' + error) }
     }
 
     //function handle
     function handleChangeSoTien(e) {
-        setSoTien(e.target.value)
+        const inputValue = e.target.value
+
+        const soTienChuaDinhDang = inputValue.replace(/\./g, '')
+        if (isNaN(soTienChuaDinhDang)) {
+            setSoTien('')
+            return
+        }
+        setSoTien(chuyenDinhDangTien(soTienChuaDinhDang))
     }
 
     function handleChangeGhiChu(e) {
@@ -55,12 +60,19 @@ function Muc_chi_tieu_mua_sam({ children }) {
     }
 
     function handleSubmit() {
-        setData({
+
+        const soTienPost = soTien.toString().replace(/\./g, '')
+
+        const dataPost = {
             loaiChiTieu: "MUA_SAM",
-            soTien: soTien,
+            soTien: Number(soTienPost),
             ghiChu: ghiChu,
-        })
-        PostMuaSam();
+        }
+
+        if (!dataPost.soTien || Number(dataPost.soTien < 0)) { return }
+        if (!dataPost.ghiChu || dataPost.ghiChu === '') { dataPost.ghiChu = "Không có ghi chú" }
+
+        PostMuaSam(dataPost);
 
     }
 
@@ -84,7 +96,7 @@ function Muc_chi_tieu_mua_sam({ children }) {
             setSoDu(tongSoTienDinhMuc)
 
             // lay thong tin da them thong bao
-            const dataThongBao = muaSamData.map(item => ({
+            const dataThongBao = chiTieuMuaSam.map(item => ({
                 tien: item.soTien,
                 ghiChu: item.ghiChu,
                 id: item.id,
@@ -114,6 +126,7 @@ function Muc_chi_tieu_mua_sam({ children }) {
     return (
         <div className={cx('wrapper')}>
             {<ContentChiTieu
+                notKhac
                 nhapLieu={'Ghi chú ( nếu có )'}
                 tenMuc={'Mua Sắm'}
                 daSuDung={daDung}
@@ -139,4 +152,3 @@ function Muc_chi_tieu_mua_sam({ children }) {
 
 export default Muc_chi_tieu_mua_sam;
 
-// test commit

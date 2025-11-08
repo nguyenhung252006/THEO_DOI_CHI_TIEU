@@ -8,8 +8,8 @@ import Card from "../Card/Card";
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
 const cx = classNames.bind(style)
-function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, isKhac = false,
-    onChangeSoTien, onChangeGhiChu, onSubmit, valueSoTien, valueGhiChu
+function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, notKhac, isKhac = false,
+    onChangeSoTien, onChangeGhiChu, onChangeKhac, onSubmit, valueSoTien, valueGhiChu, valueKhac
 }) {
     return (
         <>
@@ -36,15 +36,21 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, i
                                             value={valueSoTien}
                                             required
                                         ></input>
-                                        <label htmlFor="ghi-chu"> {nhapLieu}: </label>
-                                        <input id="ghi-chu"
-                                            onChange={onChangeGhiChu}
-                                            value={valueGhiChu}
-                                        ></input>
+                                        {notKhac && <>
+                                            <label htmlFor="ghi-chu"> {nhapLieu}: </label>
+                                            <input id="ghi-chu"
+                                                onChange={onChangeGhiChu}
+                                                value={valueGhiChu}
+                                            ></input>
+                                        </>}
                                         {isKhac && (
                                             <>
                                                 <label htmlFor="ten-khoan-chi"> Tên khoản chi: </label>
-                                                <input id="ten-khoan-chi"></input>
+                                                <input
+                                                    value={valueKhac}
+                                                    id="ten-khoan-chi"
+                                                    onChange={onChangeKhac}
+                                                    ></input>
                                             </>
                                         )}
                                         <button className={cx('btn-submit')}
