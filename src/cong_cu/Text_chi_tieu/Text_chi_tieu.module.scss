@@ -1,4 +1,4 @@
-.wrapper-page{
+.wrapper-page {
     display: flex;
     flex-direction: row;
     gap: 25px;
@@ -84,23 +84,29 @@ input {
 
     &:focus {
         background-color: rgba(94, 255, 1, 0.1);
+        transform: translateX(-2px);
+        transform: translateY(+2px);
     }
 }
 
 .btn-submit {
     margin-top: 10px;
-    border: 1px solid green;
-    border-radius: 6000px;
-    padding: 12px 12px;
-    cursor: pointer;
+    padding: 12px 24px;
+    border: 1px solid #16a34a;
+    border-radius: 9999px;
+    background: linear-gradient(145deg, #f0fff0, #d1f7d1);
+    color: #166534;
     font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);
+    transition: all 0.3s ease;
 
     &:hover {
-        font-weight: 600;
-        background-color: greenyellow;
-        color: rgb(223, 13, 13);
-        transition: linear 0.3s;
-        border: 1px solid rgb(219, 13, 23);
+        background: linear-gradient(145deg, #b9ff66, #9ef01a);
+        color: #222;
+        border-color: #28a745;
+        box-shadow: 0 8px 20px rgba(0, 128, 0, 0.3);
+        transform: translateY(-2px);
     }
 }
 

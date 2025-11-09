@@ -1,7 +1,9 @@
 import classNames from "classnames/bind";
 import style from './Muc_chi_tieu_an_uong.module.scss'
 
+//import component
 import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
+import { Them_sua_xoa as ThemSuaXoa } from "../../../Tro_nang";
 
 // import axios
 import axios from "axios"
@@ -11,6 +13,10 @@ import { useState, useEffect } from "react";
 
 //import API_BASE_URL
 import { API_BASE_URL, API_ENDPOINTS } from "../../../config";
+
+//import icon
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 //import ho tro 
 import chuyenNgay from "../../../ho_tro/chuyen_ngay";
@@ -26,6 +32,12 @@ function Muc_chi_tieu_an_uong({ }) {
     // sate quan ly thong tin Post
     const [soTien, setSoTien] = useState([])
     const [ghiChu, setGhiChu] = useState(null)
+
+    //state lay id
+    const [id, setId] = useState('')
+
+    //state set chinh Them_sua_xoa
+    const [isChinhSua, setIsChinhSua] = useState(false)
 
     // Post du lieu mua sam
     const PostAnUong = async (dataToPost) => {
@@ -54,6 +66,16 @@ function Muc_chi_tieu_an_uong({ }) {
 
     function handleChangeGhiChu(e) {
         setGhiChu(e.target.value)
+    }
+
+    //function lay id
+    const handleGetId = (id) => {
+        setId(id)
+    }
+
+    // function check Them_sua_xoa
+    function handleCheckChinhSua() {
+        setIsChinhSua(true)
     }
 
     function handleSubmit() {
@@ -120,6 +142,14 @@ function Muc_chi_tieu_an_uong({ }) {
 
     return (
         <div className={cx('wrapper')}>
+            <>
+                {isChinhSua && (<ThemSuaXoa
+                    loaiChiTieu="AN_UONG"
+                    id={id}
+                    onReload={dataAnUong}
+                    onClose={() => setIsChinhSua(false)}
+                />)}
+            </>
             {<ContentChiTieu
                 notKhac
                 nhapLieu={'Ghi chú ( nếu có )'}
@@ -127,8 +157,13 @@ function Muc_chi_tieu_an_uong({ }) {
                 daSuDung={daDung}
                 PhanTramDaSuDung={phanTram}
                 lichSu={thongBao.map(item => (
-                    <div className={cx('wrapper-content')}>
-                        <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
+                    <div  key={item.id} className={cx('wrapper-content')}>
+                        <span
+                            onClick={() => {
+                                handleGetId(item.id)
+                                handleCheckChinhSua();
+                            }}
+                        ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
                         {' || time: '}
                         <span>{chuyenNgay(item.date)}</span>
                         {' || ghi chú: '}

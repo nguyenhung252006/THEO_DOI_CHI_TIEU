@@ -4,6 +4,7 @@ import style from './Muc_chi_tieu_giai_tri.module.scss'
 
 // import component
 import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
+import { Them_sua_xoa as ThemSuaXoa } from "../../../Tro_nang";
 
 // import axios
 import axios from "axios"
@@ -18,16 +19,28 @@ import { API_BASE_URL, API_ENDPOINTS } from "../../../config";
 import chuyenNgay from "../../../ho_tro/chuyen_ngay";
 import chuyenDinhDangTien from "../../../ho_tro/chuyen_dinh_dang_tien";
 
+//import icon
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+
 const cx = classNames.bind(style)
 function Muc_chi_tieu_giai_tri({ }) {
     const [soDu, setSoDu] = useState([])
     const [daDung, setDaDung] = useState([])
     const [phanTram, setPhanTram] = useState([])
+
     // state lay thong bao
     const [thongBao, setThongBao] = useState([])
+
     // sate quan ly thong tin Post
     const [soTien, setSoTien] = useState([])
     const [ghiChu, setGhiChu] = useState(null)
+
+    //state lay id
+    const [id, setId] = useState('')
+
+    //state set chinh Them_sua_xoa
+    const [isChinhSua, setIsChinhSua] = useState(false)
 
     // Post du lieu giai tri
     const PostGiaiTri = async (dataToPost) => {
@@ -73,6 +86,16 @@ function Muc_chi_tieu_giai_tri({ }) {
 
         PostGiaiTri(dataPost);
 
+    }
+
+    //function lay id
+    const handleGetId = (id) => {
+        setId(id)
+    }
+
+    // function check Them_sua_xoa
+    function handleCheckChinhSua() {
+        setIsChinhSua(true)
     }
 
     //lay du lieu
@@ -122,6 +145,14 @@ function Muc_chi_tieu_giai_tri({ }) {
 
     return (
         <div className={cx('wrapper')}>
+            <>
+                {isChinhSua && (<ThemSuaXoa
+                    loaiChiTieu="GIAI_TRI"
+                    id={id}
+                    onReload={dataGiaiTri}
+                    onClose={() => setIsChinhSua(false)}
+                />)}
+            </>
             {<ContentChiTieu
                 notKhac
                 nhapLieu={'Ghi chú ( nếu có )'}
@@ -130,7 +161,11 @@ function Muc_chi_tieu_giai_tri({ }) {
                 PhanTramDaSuDung={phanTram}
                 lichSu={thongBao.map(item => (
                     <div className={cx('wrapper-content')}>
-                        <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
+                        <span onClick={() => {
+                            handleGetId(item.id)
+                            handleCheckChinhSua();
+                        }}
+                        ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
                         {' || time: '}
                         <span>{chuyenNgay(item.date)}</span>
                         {' || ghi chú: '}
