@@ -25,6 +25,10 @@ import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(style)
 function Muc_chi_tieu_giai_tri({ }) {
+
+    //lay id nguoi dung
+    const UserId = localStorage.getItem("id")
+
     const [soDu, setSoDu] = useState([])
     const [daDung, setDaDung] = useState([])
     const [phanTram, setPhanTram] = useState([])
@@ -45,7 +49,7 @@ function Muc_chi_tieu_giai_tri({ }) {
     // Post du lieu giai tri
     const PostGiaiTri = async (dataToPost) => {
         try {
-            await axios.post(`${API_ENDPOINTS.CHITIEU}/1`, dataToPost, { withCredentials: true })
+            await axios.post(`${API_ENDPOINTS.CHITIEU}/${UserId}`, dataToPost, { withCredentials: true })
             setSoTien('')
             setGhiChu('')
             alert('OK!')
@@ -101,7 +105,7 @@ function Muc_chi_tieu_giai_tri({ }) {
     //lay du lieu
     const dataGiaiTri = async () => {
         try {
-            const res = await axios.get(API_ENDPOINTS.USERS, { withCredentials: true })
+            const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
 
             // lay tong so tien an uong
             const dataGiaiTri = res.data.chi_tieu

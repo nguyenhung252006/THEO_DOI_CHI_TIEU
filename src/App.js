@@ -2,14 +2,24 @@ import { Fragment } from "react";
 import { DefaultLayout } from "./layouts";
 
 //routes
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import {publicRoutes} from './routes/index.js'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
+import { publicRoutes } from './routes/index.js'
+import { Login, Create } from './Login_Create/index'
+
+// import hook 
+import { LoginHook } from "./hook";
 
 function App() {
+
   return (
+
     <Router>
+      <LoginHook />
       <div>
         <Routes>
+          {/* login */}
+          <Route element={<Login />} path="/login" />
+          <Route element={<Create />} path="/create" />
           {publicRoutes.map((route, index) => {
             let Layout = DefaultLayout
             if (route.layout) {
@@ -22,7 +32,7 @@ function App() {
             return <Route
               key={index}
               path={route.path}
-              element= {<Layout><Page/></Layout>}
+              element={<Layout><Page /></Layout>}
             />
           })}
         </Routes>

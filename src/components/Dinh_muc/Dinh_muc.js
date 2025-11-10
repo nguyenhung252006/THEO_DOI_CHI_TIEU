@@ -21,6 +21,9 @@ import chuyenNgay from "../../ho_tro/chuyen_ngay";
 const cx = classNames.bind(style)
 function Dinh_muc() {
 
+    //lay id cua nguoi dung
+    const UserId = localStorage.getItem('id')
+
     //state lay thong tin dinh muc
     const [lichSu, setLichSu] = useState([])
 
@@ -48,7 +51,7 @@ function Dinh_muc() {
     //post axios
     const PostDinhMuc = async (dataPost) => {
         try {
-            await axios.post(`${API_ENDPOINTS.DINHMUC}/1`, dataPost, { withCredentials: true })
+            await axios.post(`${API_ENDPOINTS.DINHMUC}/${UserId}`, dataPost, { withCredentials: true })
             setSoTienDinhMuc('')
             setNgayDinhMuc('')
             alert('OK!')
@@ -92,7 +95,7 @@ function Dinh_muc() {
     // lay data dinh muc
     const dataDinhMuc = async () => {
         try {
-            const res = await axios.get(API_ENDPOINTS.USERS, { withCredentials: true })
+            const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
             const dataDinhMuc = res.data.dinh_muc_chi_tieu
 
             //set lich su

@@ -26,6 +26,9 @@ import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 const cx = classNames.bind(style)
 function Trang_chu() {
 
+    //lay id cua nguoi dung
+    const UserId = localStorage.getItem('id')
+
     const [profile, setProfile] = useState(null)
     const [soDu, setSoDu] = useState([])
     const [daSuDung, setDaSuDung] = useState([])
@@ -36,7 +39,7 @@ function Trang_chu() {
     // lay thong tin nguoi dung
     const dataThongTinNguoiDung = async () => {
         try {
-            const res = await axios.get(API_ENDPOINTS.USERS, { withCredentials: true })
+            const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
 
             const chiTieu = res.data.chi_tieu.map(item => Number(item.soTien));
             const chiTieuKhac = res.data.chi_tieu_khac.map(item => Number(item.soTien));

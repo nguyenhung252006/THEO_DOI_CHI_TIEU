@@ -24,6 +24,11 @@ import chuyenDinhDangTien from "../../../ho_tro/chuyen_dinh_dang_tien";
 
 const cx = classNames.bind(style)
 function Muc_chi_tieu_an_uong({ }) {
+
+    // lay id nguoi dung
+    const UserId = localStorage.getItem('id')
+
+    //state so tien
     const [soDu, setSoDu] = useState([])
     const [daDung, setDaDung] = useState([])
     const [phanTram, setPhanTram] = useState([])
@@ -42,7 +47,7 @@ function Muc_chi_tieu_an_uong({ }) {
     // Post du lieu mua sam
     const PostAnUong = async (dataToPost) => {
         try {
-            await axios.post(`${API_ENDPOINTS.CHITIEU}/1`, dataToPost, { withCredentials: true })
+            await axios.post(`${API_ENDPOINTS.CHITIEU}/${UserId}`, dataToPost, { withCredentials: true })
             setSoTien('')
             setGhiChu('')
             alert('OK!')
@@ -98,7 +103,7 @@ function Muc_chi_tieu_an_uong({ }) {
     //lay du lieu
     const dataAnUong = async () => {
         try {
-            const res = await axios.get(API_ENDPOINTS.USERS, { withCredentials: true })
+            const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
 
             // lay tong so tien an uong
             const dataAnUong = res.data.chi_tieu

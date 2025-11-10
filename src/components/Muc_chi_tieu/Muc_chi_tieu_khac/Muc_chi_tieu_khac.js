@@ -25,6 +25,9 @@ import chuyenDinhDangTien from "../../../ho_tro/chuyen_dinh_dang_tien";
 const cx = classNames.bind(style)
 function Muc_chi_tieu_khac() {
 
+    // lay id nguoi dung 
+    const UserId = localStorage.getItem('id')
+
     //khai bao state
     const [soDu, setSoDu] = useState([])
     const [daDung, setDaDung] = useState([])
@@ -78,7 +81,7 @@ function Muc_chi_tieu_khac() {
     // post du lieu
     const PostChiTieuKhac = async (dataPost) => {
         try {
-            await axios.post(` ${API_ENDPOINTS.CHITIEUKHAC}/1`, dataPost, { withCredentials: true })
+            await axios.post(` ${API_ENDPOINTS.CHITIEUKHAC}/${UserId}`, dataPost, { withCredentials: true })
             setSoTien('')
             seTenKhoan('')
             alert('OK!')
@@ -90,7 +93,7 @@ function Muc_chi_tieu_khac() {
 
     const dataMucChiTieuKhac = async () => {
         try {
-            const res = await axios.get(API_ENDPOINTS.USERS, { withCredentials: true })
+            const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
 
             //lay data cua muc chi tieu khac
             const MucChiTieuKhac = res.data.chi_tieu_khac
@@ -124,7 +127,7 @@ function Muc_chi_tieu_khac() {
     }
 
     //lay data
-    useEffect(() => {
+    useEffect(() => { 
         dataMucChiTieuKhac()
     }, [])
 

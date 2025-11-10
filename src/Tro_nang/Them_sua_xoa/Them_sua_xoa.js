@@ -20,6 +20,9 @@ import { useState, useEffect, useRef } from "react";
 const cx = classNames.bind(style)
 function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
 
+    //lay id nguoi dung 
+    const UserId = localStorage.getItem('id')
+
     const [value1, setValue1] = useState(null)
     const [value2, setValue2] = useState(null)
 
@@ -52,7 +55,7 @@ function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
     //lay data
     const GetData = async () => {
         try {
-            const res = await axios.get(API_ENDPOINTS.USERS, { withCredentials: true })
+            const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
             const data = res.data.chi_tieu
 
             //lay du lieu
