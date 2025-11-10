@@ -3,12 +3,17 @@ import style from './Muc_chi_tieu_khac.module.scss'
 
 //import component
 import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
+import { Them_sua_xoa_khac as ThemSuaXoa } from "../../../Tro_nang";
 
 // import axios
 import axios from "axios"
 
 // import hook
 import { useState, useEffect } from "react";
+
+//import icon
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 //import API_BASE_URL
 import { API_BASE_URL, API_ENDPOINTS } from "../../../config";
@@ -30,6 +35,12 @@ function Muc_chi_tieu_khac() {
 
     // lat thong bao
     const [thongBao, setThongBao] = useState([])
+
+    //state lay id
+    const [id, setId] = useState('')
+
+    //state set chinh Them_sua_xoa
+    const [isChinhSua, setIsChinhSua] = useState(false)
 
     // sate quan ly thong tin Post
     const [soTien, setSoTien] = useState([])
@@ -98,6 +109,7 @@ function Muc_chi_tieu_khac() {
 
             //lay thong bao
             const dataThongBao = MucChiTieuKhac.map(item => ({
+                id: item.id,
                 tien: item.soTien,
                 tenKhoan: item.tenKhoan,
                 date: item.thoiGianNhap
@@ -116,6 +128,17 @@ function Muc_chi_tieu_khac() {
         dataMucChiTieuKhac()
     }, [])
 
+    //function lay id
+    const handleGetId = (id) => {
+        setId(id)
+        console.log(id)
+    }
+
+    // function check Them_sua_xoa
+    function handleCheckChinhSua() {
+        setIsChinhSua(true)
+    }
+
     //tinh phan tram
     useEffect(() => {
         if (soDu > 0) {
@@ -127,6 +150,14 @@ function Muc_chi_tieu_khac() {
 
     return (
         <div className={cx('wrapper')}>
+            <>
+                {isChinhSua && (<ThemSuaXoa
+                    loaiChiTieu="MUA_SAM"
+                    id={id}
+                    onReload={dataMucChiTieuKhac}
+                    onClose={() => setIsChinhSua(false)}
+                />)}
+            </>
             {<ContentChiTieu
                 isKhac
                 nhapLieu={'Ghi chú ( nếu có )'}
@@ -134,8 +165,14 @@ function Muc_chi_tieu_khac() {
                 daSuDung={daDung}
                 PhanTramDaSuDung={phanTram}
                 lichSu={thongBao.map(item => (
-                    <div className={cx('wrapper-content')}>
-                        <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
+                    <div key={item.id} className={cx('wrapper-content')}>
+                        <span
+                            onClick={() => {
+                                handleGetId(item.id)
+                                handleCheckChinhSua();
+                            }}
+
+                        ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
                         {' || time: '}
                         <span>{chuyenNgay(item.date)}</span>
                         {' || Tên khoản: '}
