@@ -31,14 +31,14 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, n
                                 <div className={cx('input-submit')}>
                                     <div>
                                         <label htmlFor="so-tien"> nhập số tiền: </label>
-                                        <input id="so-tien"
+                                        <input className={cx('input-layout')} id="so-tien"
                                             onChange={onChangeSoTien}
                                             value={valueSoTien}
                                             required
                                         ></input>
                                         {notKhac && <>
                                             <label htmlFor="ghi-chu"> {nhapLieu}: </label>
-                                            <input id="ghi-chu"
+                                            <input className={cx('input-layout')} id="ghi-chu"
                                                 onChange={onChangeGhiChu}
                                                 value={valueGhiChu}
                                             ></input>
@@ -46,11 +46,11 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, n
                                         {isKhac && (
                                             <>
                                                 <label htmlFor="ten-khoan-chi"> Tên khoản chi: </label>
-                                                <input
+                                                <input className={cx('input-layout')}
                                                     value={valueKhac}
                                                     id="ten-khoan-chi"
                                                     onChange={onChangeKhac}
-                                                    ></input>
+                                                ></input>
                                             </>
                                         )}
                                         <button className={cx('btn-submit')}

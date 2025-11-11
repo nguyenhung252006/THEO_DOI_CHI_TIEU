@@ -130,12 +130,12 @@ function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
                 <div className={cx('wrapper-input')}>
                     <div className={cx('input-content')}>
                         <label>Sửa số tiền: </label>
-                        <input
+                        <input className={cx('input-layout')}
                             value={chuyenDinhDangTien(value1)}
                             onChange={(e) => { handleChangeValue1(e) }}
                         ></input>
                         <label>Sửa ghi chú:</label>
-                        <input
+                        <input className={cx('input-layout')}
                             value={value2}
                             onChange={(e) => { handleChangeValue2(e) }}
                         ></input>

@@ -148,6 +148,7 @@ function Muc_chi_tieu_an_uong({ }) {
     return (
         <div className={cx('wrapper')}>
             <>
+                <span style={{color: "red"}}>ấn vào <FontAwesomeIcon icon={faCircleInfo} /> để chỉnh sửa hoặc xóa</span>
                 {isChinhSua && (<ThemSuaXoa
                     loaiChiTieu="AN_UONG"
                     id={id}
@@ -162,7 +163,7 @@ function Muc_chi_tieu_an_uong({ }) {
                 daSuDung={daDung}
                 PhanTramDaSuDung={phanTram}
                 lichSu={thongBao.map(item => (
-                    <div  key={item.id} className={cx('wrapper-content')}>
+                    <div key={item.id} className={cx('wrapper-content')}>
                         <span
                             onClick={() => {
                                 handleGetId(item.id)
@@ -174,6 +175,7 @@ function Muc_chi_tieu_an_uong({ }) {
                         {' || ghi chú: '}
                         {item?.ghiChu && <span>{item.ghiChu}</span>}
                     </div>
+
                 ))}
                 onChangeGhiChu={handleChangeGhiChu}
                 onChangeSoTien={handleChangeSoTien}
@@ -182,6 +184,7 @@ function Muc_chi_tieu_an_uong({ }) {
                 valueSoTien={soTien}
             />}
         </div>
+
     );
 }
 

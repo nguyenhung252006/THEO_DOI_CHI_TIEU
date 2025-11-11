@@ -23,6 +23,9 @@ function Login() {
     // chuyen huong
     const navigate = useNavigate()
 
+    //check tai khoan mat khau co dung khong
+    const [isPassWord, setIsPassWord] = useState(true)
+
     //state luu tai khoan va mat khau
     const [taiKhoan, setTaiKhoan] = useState('')
     const [matKhau, setMatKhau] = useState('')
@@ -65,10 +68,11 @@ function Login() {
     const handleGetUser = () => {
         const user = data.find(item => item.taiKhoan === taiKhoan && item.matKhau === matKhau)
         if (!user) {
-            alert("sai tai khoan hoac mat khau")
+            setIsPassWord(false)
             return
         }
         localStorage.setItem("id", JSON.stringify(user.id))
+        setIsPassWord(true)
         setIdUser(localStorage.getItem('id'))
         navigate('/')
     }
@@ -88,12 +92,12 @@ function Login() {
                 <div className={cx('input-wrapper')}>
                     {/* phần để điền thông tin đăng nhập */}
                     <label>Tài Khoản</label>
-                    <input
+                    <input className={!isPassWord ? cx('not-is-pass-word') : ''}
                         value={taiKhoan}
                         onChange={(e) => { handleTaiKhoan(e) }}
                     ></input>
                     <label>Mật Khẩu</label>
-                    <input
+                    <input className={!isPassWord ? cx('not-is-pass-word') : ''}
                         type='password'
                         value={matKhau}
                         onChange={(e) => { handleMatKhau(e) }}
@@ -101,6 +105,7 @@ function Login() {
                 </div>
                 <div className={cx('create-account')}>
                     <Link to={"/create"}>Tạo tài khoản</Link>
+                    {!isPassWord && <span>Thông tin đăng nhập sai</span>}
                 </div>
                 <div>
                     <button

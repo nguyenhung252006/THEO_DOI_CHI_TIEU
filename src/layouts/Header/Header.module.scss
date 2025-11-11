@@ -12,14 +12,14 @@
 .avatar {
   position: absolute;
   left: 80%;
-  top: 50%;
+  top: 30%;
   transform: translateY(-50%);
 }
 
 .avatar-wrapper {
   display: flex;
-  align-items: center; 
-  gap: 20px; 
+  align-items: center;
+  gap: 20px;
 }
 
 .avatar-img {
@@ -31,7 +31,39 @@
 }
 
 .avatar-name {
+  position: fixed;
+  min-width: 200px;
   font-size: 16px;
   font-weight: 500;
   color: #333;
+  cursor: pointer;
+}
+
+.dang-xuat-layout {
+  margin-top: 12px;
+  transition: all 0.25s ease;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+// avatar
+.avatar-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.content-avatar {
+  position: absolute;
+  min-width: 200px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

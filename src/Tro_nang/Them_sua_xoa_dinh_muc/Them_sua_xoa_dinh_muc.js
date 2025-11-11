@@ -1,6 +1,6 @@
 //import style
 import classNames from "classnames/bind";
-import style from './Them_sua_xoa_khac.module.scss'
+import style from './Them_sua_xoa_dinh_muc.module.scss'
 
 //import icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,7 +32,7 @@ function Them_sua_xoa({ id, onReload, onClose }) {
     //DELETE data 
     const DeleteData = async () => {
         try {
-            await axios.delete(`${API_ENDPOINTS.CHITIEUKHAC}/${id}`, { withCredentials: true })
+            await axios.delete(`${API_ENDPOINTS.DINHMUC}/${id}`, { withCredentials: true })
             if (onReload) onReload();
             if (onClose) onClose();
         } catch (err) {
@@ -43,7 +43,7 @@ function Them_sua_xoa({ id, onReload, onClose }) {
     //PUT data
     const PutData = async (dataPut) => {
         try {
-            await axios.put(`${API_ENDPOINTS.CHITIEUKHAC}/${id}`, dataPut, { withCredentials: true })
+            await axios.put(`${API_ENDPOINTS.DINHMUC}/${id}`, dataPut, { withCredentials: true })
 
             if (onReload) { onReload() }
         } catch (err) {
@@ -56,18 +56,16 @@ function Them_sua_xoa({ id, onReload, onClose }) {
     const GetData = async () => {
         try {
             const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
-            const data = res.data.chi_tieu_khac
+            const data = res.data.dinh_muc_chi_tieu
 
             // //lay du lieu cho input
             const inputData = data.filter(item => item.id === id)
 
-            // //set value1 la so tien, value2 la ghi chu 
+            // //set value1 la so tien, value2 la so ngay 
 
-            setValue1(inputData[0].soTien)
-            setValue2(inputData[0].tenKhoan)
+            setValue1(inputData[0].soTienDinhMuc)
+            setValue2(inputData[0].soNgay)
 
-            // check
-            console.log(inputData)
         } catch (err) {
             console.error(err)
         }
@@ -89,8 +87,8 @@ function Them_sua_xoa({ id, onReload, onClose }) {
         const soTienPut = value1.toString().replace(/\./g, '')
 
         const dataPut = {
-            soTien: Number(soTienPut),
-            tenKhoan: value2,
+            soTienDinhMuc: Number(soTienPut),
+            soNgay: value2,
         }
         PutData(dataPut)
         onClose()
@@ -115,8 +113,6 @@ function Them_sua_xoa({ id, onReload, onClose }) {
         };
     }, [onClose]);
 
-    console.log(value1)
-    console.log(value2)
 
     return (
         <>
@@ -130,7 +126,7 @@ function Them_sua_xoa({ id, onReload, onClose }) {
                             value={chuyenDinhDangTien(value1)}
                             onChange={(e) => { handleChangeValue1(e) }}
                         ></input>
-                        <label>Sửa tên khoản:</label>
+                        <label>Sửa số ngày:</label>
                         <input className={cx('input-layout')}
                             value={value2}
                             onChange={(e) => { handleChangeValue2(e) }}

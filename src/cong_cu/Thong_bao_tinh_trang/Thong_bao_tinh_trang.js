@@ -20,7 +20,7 @@ function Thong_bao_tinh_trang({ sodu, daSuDung, className, dauRa, dauVao, dateVa
                     )}
                 </>
                 <>
-                    {daSuDung && (
+                    {daSuDung !== 0 && (
                         <p>Đã sử dụng: <span className={cx(className)}>{chuyenDinhDangTien(daSuDung)} VNĐ</span></p>
                     )}
                 </>

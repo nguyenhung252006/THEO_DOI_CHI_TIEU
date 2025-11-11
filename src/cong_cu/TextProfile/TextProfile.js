@@ -38,9 +38,9 @@ function TextProfile({ name, email, soDu, sdt, daSuDung, id }) {
                     )
                         
                     }
-                    {daSuDung &&
+                    {daSuDung !== 0 &&
                         <>
-                            <p className={cx('text-dasudung')}>Đã sử dụng: {chuyenDinhDangTien(daSuDung)} VNĐ</p>
+                            <p className={cx('text-dasudung')}>Đã sử dụng:  {chuyenDinhDangTien(daSuDung)} VNĐ</p>
                         </>
                     }
                 </div>

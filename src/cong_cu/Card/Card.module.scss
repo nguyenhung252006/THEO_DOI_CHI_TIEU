@@ -111,3 +111,37 @@
     box-shadow: 0 0 15px rgba(199, 182, 182, 0.8);
     margin: 12px 24px;
 }
+
+.wrapper-content-text {
+    position: relative;
+    width: 400px;
+    min-height: 200px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid rgb(128, 34, 34);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0 0 15px rgba(199, 182, 182, 0.8);
+    margin: 0 12px;
+    margin-top: 24px;
+    overflow-x: hidden;
+}
+
+.wrapper-content-history {
+    position: relative;
+    width: 94.5%;
+    min-height: 200px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid rgb(128, 34, 34);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0 0 15px rgba(199, 182, 182, 0.8);
+    margin: 0 12px;
+    margin-top: 24px;
+    overflow-x: hidden;
+}

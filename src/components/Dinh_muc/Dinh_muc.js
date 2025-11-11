@@ -3,6 +3,7 @@ import style from './Dinh_muc.module.scss'
 
 //import component
 import Card from "../../cong_cu/Card/Card";
+import { Them_sua_xoa_dinh_muc as ThemSuaXoa } from "../../Tro_nang";
 
 //import API_BASE_URL
 import { API_BASE_URL, API_ENDPOINTS } from "../../config";
@@ -16,6 +17,10 @@ import { useState, useEffect } from "react";
 //import ho tro 
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 import chuyenNgay from "../../ho_tro/chuyen_ngay";
+
+//import icon
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 
 const cx = classNames.bind(style)
@@ -43,10 +48,25 @@ function Dinh_muc() {
     //state canh bao
     const [canhBao, setCanhBao] = useState([])
 
+    //state lay id
+    const [id, setId] = useState('')
+
+    //state set chinh Them_sua_xoa
+    const [isChinhSua, setIsChinhSua] = useState(false)
+
     //state post
     const [soTienDinhMuc, setSoTienDinhMuc] = useState([])
     const [ngayDinhMuc, setNgayDinhMuc] = useState([])
 
+    //function lay id
+    const handleGetId = (id) => {
+        setId(id)
+    }
+
+    // function check Them_sua_xoa
+    function handleCheckChinhSua() {
+        setIsChinhSua(true)
+    }
 
     //post axios
     const PostDinhMuc = async (dataPost) => {
@@ -97,9 +117,9 @@ function Dinh_muc() {
         try {
             const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
             const dataDinhMuc = res.data.dinh_muc_chi_tieu
-
             //set lich su
             const dataLichSu = dataDinhMuc.map(item => ({
+                id: item.id,
                 tien: item.soTienDinhMuc,
                 date: item.ngayLuu,
                 soNgay: item.soNgay
@@ -127,9 +147,6 @@ function Dinh_muc() {
             const soTienDaDungChiTieu = dataTienDaDungChiTieu.map(item => Number(item.soTien))
             setTienDaDung([...soTienDaDungChiTieu, ...soTienDaDungKhac].reduce((a, b) => a + b, 0))
 
-            // check thong tin
-            console.log(dataDinhMuc)
-            console.log(dataTienDaDungChiTieuKhac)
 
         } catch (err) {
             console.error("Error: " + err)
@@ -177,17 +194,24 @@ function Dinh_muc() {
     return (
         <>
             <h1 className={cx('wrapper-text-content')}>Định mức chi tiêu</h1>
+            {isChinhSua && (<ThemSuaXoa
+                loaiChiTieu="MUA_SAM"
+                id={id}
+                onReload={dataDinhMuc}
+                onClose={() => setIsChinhSua(false)}
+            />)}
             <div className={cx('wrapper')}>
+                <span style={{ color: "red" }}>ấn vào <FontAwesomeIcon icon={faCircleInfo} /> để chỉnh sửa hoặc xóa</span>
                 <Card className={'wrapper-content-dinh-muc'}>
                     <div className={cx('content')}>
                         <div className={cx('wrapper-input')}>
                             <label htmlFor="dinh-muc">Thêm định mức: </label>
-                            <input id="dinh-muc"
+                            <input className={cx('input-layout')} id="dinh-muc"
                                 onChange={handleChangeSoTienDinhMuc}
                                 value={soTienDinhMuc}
                             ></input>
                             <label>Số ngày thực hiện:</label>
-                            <input
+                            <input className={cx('input-layout')}
                                 onChange={handleChangeSoNgay}
                                 value={ngayDinhMuc}
                             ></input>
@@ -209,7 +233,7 @@ function Dinh_muc() {
                             <div className={cx('thong-bao')}>
                                 <h1>gợi ý và cảnh báo</h1>
                                 <div className={cx('content-warning')}>
-                                    <Card className={'wrapper-content'}>
+                                    <Card className={'wrapper-content-text'}>
                                         <div className={cx('text-content')}>
                                             <h3>Gợi ý</h3>
                                             <div className={cx('text-content')}>
@@ -218,7 +242,7 @@ function Dinh_muc() {
                                         </div>
                                     </Card>
 
-                                    <Card className={'wrapper-content'}>
+                                    <Card className={'wrapper-content-text'}>
                                         <div className={cx('text-content')}>
                                             <h3>Cảnh báo</h3>
                                             <div className={cx('text-content')}>
@@ -230,11 +254,16 @@ function Dinh_muc() {
                             </div>
                             <div className={cx('lich-su')}>
                                 <h1>Lịch sử thêm</h1>
-                                <Card className={'wrapper-content'}>
+                                <Card className={'wrapper-content-history'}>
                                     <div className={cx('text-lich-su')}>
                                         {lichSu.map(item => (
                                             <div className={cx('text-inline-lich-su')}>
-                                                <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
+                                                <span
+                                                    onClick={() => {
+                                                        handleGetId(item.id)
+                                                        handleCheckChinhSua();
+                                                    }}
+                                                ><FontAwesomeIcon icon={faCircleInfo} /> {chuyenDinhDangTien(item.tien)} VNĐ</span>
                                                 {' || date:'}
                                                 <span>{chuyenNgay(item.date)}</span>
                                                 {' || số ngày thực hiện: '}

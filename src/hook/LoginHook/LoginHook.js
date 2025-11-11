@@ -1,15 +1,27 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function LoginHook() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    useEffect(() => {
-        const userId = localStorage.getItem('id');
-        if (!userId) {
-            navigate('/login');
-        }
-    }, [navigate]);
+  useEffect(() => {
+    const id = localStorage.getItem("id");
+
+
+    const publicPaths = ["/login", "/create"];
+
+    if (!id && !publicPaths.includes(location.pathname)) {
+      navigate("/login");
+    }
+
+    if (id && publicPaths.includes(location.pathname)) {
+      navigate("/");
+    }
+
+  }, [location, navigate]);
+
+  return null;
 }
 
 export default LoginHook

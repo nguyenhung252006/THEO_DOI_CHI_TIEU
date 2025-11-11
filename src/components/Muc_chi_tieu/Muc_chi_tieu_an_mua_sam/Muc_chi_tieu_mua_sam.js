@@ -149,6 +149,7 @@ function Muc_chi_tieu_mua_sam({ children }) {
     return (
         <div className={cx('wrapper')}>
             <>
+                <span style={{ color: "red" }}>ấn vào <FontAwesomeIcon icon={faCircleInfo} /> để chỉnh sửa hoặc xóa</span>
                 {isChinhSua && (<ThemSuaXoa
                     loaiChiTieu="MUA_SAM"
                     id={id}

@@ -1,0 +1,27 @@
+.wrapper {
+    background-color: rgba(253, 253, 253, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border-radius: 10px ;
+}
+
+
+.select {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    span{
+        margin: 0 4px;
+        text-align: center;
+        align-items: center;
+        align-content: center;
+        padding: 4px 4px;
+        cursor: pointer;
+    }
+}
+
+.login{
+    color: var(--primary);
+    border-top: 2px rgba(97, 89, 89, 0.5) solid;
+}
+

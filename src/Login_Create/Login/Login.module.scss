@@ -113,13 +113,28 @@
 
 
 .create-account {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+    margin-top: 12px;
+    margin-left: 12px;
 
     a {
         text-decoration: none;
         color: black;
     }
 
+    span {
+        color: red;
+    }
+
     cursor: pointer;
-    margin-left: 77%;
     margin-top: 12px;
+}
+
+.not-is-pass-word {
+    border-bottom: 2px solid #e70000 !important;
 }

@@ -120,11 +120,6 @@ function Thong_tin() {
                     </div>
                 </Card>
 
-                <div>
-                    {/* <Card className={'wrapper-content'}>
-                        <BieuDo />
-                    </Card> */}
-                </div>
             </div>
             <div className={cx('wrapper')} >
                 <Card className={'wrapper-content'}>
