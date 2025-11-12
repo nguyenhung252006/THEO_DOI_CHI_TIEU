@@ -62,39 +62,10 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, n
                         </div>
                     </Card>
                 </div>
-                <Card className={'wrapper-content'}>
-                    <div className={cx('wrapper-history')}>
-                        <h1 style={{
-                            'margin': '12px 12px',
-                            'fontWeight': '600',
-                        }}>Lịch sử đã thêm</h1>
-                        <div
-                            style={{
-                                margin: '12px 12px',
-                                fontWeight: 600,
-                                width: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px',
-                            }}
-                        >
-                            <div
-                                style={{
-                                    minWidth: '400px',
-                                    maxWidth: '100%',
-                                    color: 'green',
-                                    minHeight: '100px',
-                                    maxHeight: '400px',
-                                    overflowY: 'auto',
-                                    border: '1px solid wheat',
-                                    borderRadius: '10px',
-                                    padding: '12px 12px',
-                                    boxShadow: '0 0 12px rgb(253, 247, 247)',
-                                }}
-                            >
-                                {lichSu}
-                            </div>
-                        </div>
+
+                <Card className={'wrapper-content-lich-su-big'}>
+                    <div>
+                        {lichSu}
                     </div>
                 </Card >
             </div >

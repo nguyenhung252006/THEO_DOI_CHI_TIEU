@@ -8,16 +8,9 @@
 .wrapper-content {
     margin: 12px 12px;
     color: rgb(175, 49, 49);
-    border-bottom: 1px wheat solid;
 
     span {
         margin: 12px 0;
         color: rgb(11, 14, 12);
-    }
-
-    &:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        z-index: 10;
     }
 }

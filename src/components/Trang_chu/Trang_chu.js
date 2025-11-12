@@ -69,10 +69,10 @@ function Trang_chu() {
     return (
         <>
             <div className={cx('wrapper')}>
-                <Card className={'wrapper-small'}>
+                <Card className={'wrapper-content'}>
                     <h1>Gioi thieu</h1>
                 </Card>
-                <Card className={'wrapper-small'}>
+                <Card className={'wrapper-content'}>
                     <h1>Thong bao</h1>
                 </Card>
             </div>
@@ -106,7 +106,7 @@ function Trang_chu() {
                                 daSuDung={daSuDung}
                             />}
                         </Card>
-                        <Card className={'wrapper-square-big'}>
+                        <Card className={'wrapper-content'}>
                             {conLai > 0 ? (<BieuDo
                                 dataCompare={[
                                     { name: 'Chi tiêu', value1: daSuDung, value2: (conLai) }

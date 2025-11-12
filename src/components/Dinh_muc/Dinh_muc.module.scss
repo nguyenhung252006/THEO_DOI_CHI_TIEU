@@ -65,7 +65,9 @@
 .text-lich-su {
     margin: 24px 24px;
     font-size: 16px;
-
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     .text-inline-lich-su {
         border-bottom: 1px solid wheat;
@@ -89,6 +91,13 @@
     }
 }
 
+.margin-content {
+    margin-left: 20%;
+
+    .card{
+        margin: 10px 10px;
+    }
+}
 
 .content-warning {
     border-top: 3px solid wheat;
@@ -140,5 +149,15 @@
         border-color: #28a745;
         box-shadow: 0 8px 20px rgba(0, 128, 0, 0.3);
         transform: translateY(-2px);
+    }
+}
+
+.wrapper-content {
+    margin: 12px 12px;
+    color: rgb(175, 49, 49);
+
+    span {
+        margin: 12px 0;
+        color: rgb(11, 14, 12);
     }
 }

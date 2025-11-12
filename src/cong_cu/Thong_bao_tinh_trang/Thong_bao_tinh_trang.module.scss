@@ -6,22 +6,19 @@
 }
 
 .wrapper-content {
-    border-top: 1px solid wheat;
     margin: 12px 12px;
     font-weight: 600;
     min-height: 100px;
     max-height: 160px;
-    max-width: 1000px;
+    max-width: 500px;
     min-width: 500px;
     overflow-y: auto;
     border: 1x solid wheat;
-    border-right: 1px solid wheat;
-    border-bottom: 1px solid wheat;
-    border-left: 1px solid wheat;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     user-select: none;
+    overflow-x: hidden;
 
     p {
         margin: 12px 12px;
@@ -37,7 +34,7 @@
     display: flex;
     flex-direction: row;
     user-select: none;
-
+    overflow-x: hidden;
 }
 
 .primary {

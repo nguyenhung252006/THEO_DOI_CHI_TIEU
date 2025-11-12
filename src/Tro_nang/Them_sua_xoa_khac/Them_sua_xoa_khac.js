@@ -12,6 +12,10 @@ import { API_BASE_URL, API_ENDPOINTS } from '../../config.js'
 //import ho tro 
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
+//import component
+import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan, Xac_nhan_xoa as XacNhanXoa } from "../../alert";
+
+
 //import axios
 import axios from "axios";
 //import state
@@ -29,12 +33,26 @@ function Them_sua_xoa({ id, onReload, onClose }) {
     //state check out side 
     const wrapperRef = useRef(null);
 
+
+    //state check hien bang theo doi
+    const [isCheck, setIsCheck] = useState(false)
+
+    //check thanh cong 
+    const [isThanhCong, setIsThanhCong] = useState(false)
+
+    // check Xoa 
+    const [isDelete, setIsDelete] = useState(false)
+
     //DELETE data 
     const DeleteData = async () => {
         try {
             await axios.delete(`${API_ENDPOINTS.CHITIEUKHAC}/${id}`, { withCredentials: true })
             if (onReload) onReload();
-            if (onClose) onClose();
+            setIsThanhCong(true)
+            setTimeout(() => {
+                setIsThanhCong(false)
+                if (onClose) onClose()
+            }, 1000)
         } catch (err) {
             console.error(err)
         }
@@ -45,7 +63,12 @@ function Them_sua_xoa({ id, onReload, onClose }) {
         try {
             await axios.put(`${API_ENDPOINTS.CHITIEUKHAC}/${id}`, dataPut, { withCredentials: true })
 
-            if (onReload) { onReload() }
+            setIsThanhCong(true)
+            setTimeout(() => {
+                setIsThanhCong(false)
+                if (onClose) onClose()
+            }, 1000)
+            if(onReload) onReload()
         } catch (err) {
             console.error(err)
         }
@@ -93,7 +116,28 @@ function Them_sua_xoa({ id, onReload, onClose }) {
             tenKhoan: value2,
         }
         PutData(dataPut)
-        onClose()
+        setIsThanhCong(true)
+        setTimeout(() => {
+            setIsThanhCong(false)
+            if (onClose) onClose()
+        }, 1000)
+    }
+
+    //handle hien thi bang xac nhan
+    const handleIsCheck = () => {
+        setIsCheck(true)
+    }
+
+    const handleNotIsCheck = () => {
+        setIsCheck(false)
+    }
+
+    //handle hien thi bang Xoa
+    const handleIsDelete = () => {
+        setIsDelete(true)
+    }
+    const handleNotIsDelete = () => {
+        setIsDelete(false)
     }
 
     // nhan data
@@ -120,7 +164,18 @@ function Them_sua_xoa({ id, onReload, onClose }) {
 
     return (
         <>
-            <div className={cx('wrapper')} ref={wrapperRef}>
+            {isDelete && <XacNhanXoa
+                isNotDelete={handleNotIsDelete}
+                handleSubmit={DeleteData}
+            />}
+            {isThanhCong && <ThanhCong />}
+            {isCheck && <XacNhan
+                khac
+                soTien={value1}
+                ghiChu={value2}
+                notSubmit={handleNotIsCheck}
+                Submit={handleSubmit} />}
+            {!isCheck && !! !isDelete && <div className={cx('wrapper')} ref={wrapperRef}>
                 <p>*Nhấn ra ngoài để thoát</p>
                 <h1>Lựa chọn-tùy chỉnh </h1>
                 <div className={cx('wrapper-input')}>
@@ -136,16 +191,16 @@ function Them_sua_xoa({ id, onReload, onClose }) {
                             onChange={(e) => { handleChangeValue2(e) }}
                         ></input>
                         <button
-                            onClick={handleSubmit}
+                            onClick={handleIsCheck}
                         >Xác Nhận</button>
                     </div>
                     <div>
                         <button
-                            onClick={() => { DeleteData() }}
+                            onClick={() => { handleIsDelete() }}
                         >Xóa khoản chi <FontAwesomeIcon icon={faTrash} /></button>
                     </div>
                 </div>
-            </div>
+            </div>}
         </>
     );
 }

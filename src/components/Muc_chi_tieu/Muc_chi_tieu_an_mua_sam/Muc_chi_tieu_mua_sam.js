@@ -4,6 +4,9 @@ import style from './Muc_chi_tieu_mua_sam.module.scss'
 // import component
 import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
 import { Them_sua_xoa as ThemSuaXoa } from "../../../Tro_nang";
+import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan } from "../../../alert";
+import Card from "../../../cong_cu/Card/Card";
+
 
 // import axios
 import axios from "axios"
@@ -32,8 +35,10 @@ function Muc_chi_tieu_mua_sam({ children }) {
     const [soDu, setSoDu] = useState([])
     const [daDung, setDaDung] = useState([])
     const [phanTram, setPhanTram] = useState([])
+
     // state lay thong bao
     const [thongBao, setThongBao] = useState([])
+
     // sate quan ly thong tin Post
     const [soTien, setSoTien] = useState([])
     const [ghiChu, setGhiChu] = useState(null)
@@ -44,17 +49,23 @@ function Muc_chi_tieu_mua_sam({ children }) {
     //state set chinh Them_sua_xoa
     const [isChinhSua, setIsChinhSua] = useState(false)
 
+    //state check da sua va da ThemSuaXoa
+    const [isPost, setisPost] = useState(false)
+
     // Post du lieu mua sam
     const PostMuaSam = async (dataToPost) => {
         try {
             await axios.post(`${API_ENDPOINTS.CHITIEU}/${UserId}`, dataToPost, { withCredentials: true })
             setSoTien('')
             setGhiChu('')
-            alert('OK!')
+            setisPost(true)
 
             //set lai state
             dataMuaSam()
-        } catch (error) { console.error('Post Error' + error) }
+        } catch (error) {
+            console.error('Post Error' + error)
+            return
+        }
     }
 
     //function handle
@@ -100,6 +111,7 @@ function Muc_chi_tieu_mua_sam({ children }) {
         setIsChinhSua(true)
     }
 
+
     //lay du lieu
     const dataMuaSam = async () => {
         try {
@@ -126,6 +138,10 @@ function Muc_chi_tieu_mua_sam({ children }) {
                 date: item.thoiGianNhap,
             }))
             setThongBao(dataThongBao)
+            //set lai isPost
+            setTimeout(() => {
+                setisPost(false)
+            }, 1000)
         } catch (error) { console.error('Loi khi lay API' + error) }
     }
 
@@ -149,6 +165,7 @@ function Muc_chi_tieu_mua_sam({ children }) {
     return (
         <div className={cx('wrapper')}>
             <>
+                {isPost && <ThanhCong />}
                 <span style={{ color: "red" }}>ấn vào <FontAwesomeIcon icon={faCircleInfo} /> để chỉnh sửa hoặc xóa</span>
                 {isChinhSua && (<ThemSuaXoa
                     loaiChiTieu="MUA_SAM"
@@ -163,23 +180,23 @@ function Muc_chi_tieu_mua_sam({ children }) {
                 tenMuc={'Mua Sắm'}
                 daSuDung={daDung}
                 PhanTramDaSuDung={phanTram}
-                lichSu={thongBao.map(item => (
-                    <div
-                        key={item.id}
-                        className={cx('wrapper-content')}
-                    >
-                        <span
-                            onClick={() => {
-                                handleGetId(item.id)
-                                handleCheckChinhSua();
-                            }}
-                        ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
-                        {' || time: '}
-                        <span>{chuyenNgay(item.date)}</span>
-                        {' || ghi chú: '}
-                        {item?.ghiChu && <span>{item.ghiChu}<span></span></span>}
-                    </div>
-                ))}
+                lichSu={
+                    thongBao.map(item => (
+                        <Card className={'wrapper-content-lich-su'}>
+                            <div key={item.id} className={cx('wrapper-content')}> 
+                                <span
+                                    onClick={() => {
+                                        handleGetId(item.id)
+                                        handleCheckChinhSua();
+                                    }}
+                                ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
+                                {' || time: '}
+                                <span>{chuyenNgay(item.date)}</span>
+                                {' || ghi chú: '}
+                                {item?.ghiChu && <span>{item.ghiChu}</span>}
+                            </div>
+                        </Card>
+                    ))}
                 onChangeGhiChu={handleChangeGhiChu}
                 onChangeSoTien={handleChangeSoTien}
                 onSubmit={handleSubmit}

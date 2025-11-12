@@ -4,6 +4,7 @@ import style from './Muc_chi_tieu_khac.module.scss'
 //import component
 import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
 import { Them_sua_xoa_khac as ThemSuaXoa } from "../../../Tro_nang";
+import Card from "../../../cong_cu/Card/Card";
 
 // import axios
 import axios from "axios"
@@ -169,19 +170,21 @@ function Muc_chi_tieu_khac() {
                 daSuDung={daDung}
                 PhanTramDaSuDung={phanTram}
                 lichSu={thongBao.map(item => (
-                    <div key={item.id} className={cx('wrapper-content')}>
-                        <span
-                            onClick={() => {
-                                handleGetId(item.id)
-                                handleCheckChinhSua();
-                            }}
-
-                        ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
-                        {' || time: '}
-                        <span>{chuyenNgay(item.date)}</span>
-                        {' || Tên khoản: '}
-                        {item?.tenKhoan && <span>{item.tenKhoan}</span>}
-                    </div>
+                    <Card className={'wrapper-content-lich-su-big'}>
+                        <div key={item.id} className={cx('wrapper-content')}>
+                            <span
+                                onClick={() => {
+                                    handleGetId(item.id)
+                                    handleCheckChinhSua();
+                                }}
+    
+                            ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
+                            {' || time: '}
+                            <span>{chuyenNgay(item.date)}</span>
+                            {' || Tên khoản: '}
+                            {item?.tenKhoan && <span>{item.tenKhoan}</span>}
+                        </div>
+                    </Card>
                 ))}
                 onChangeSoTien={handleChangeSoTien}
                 valueSoTien={soTien}

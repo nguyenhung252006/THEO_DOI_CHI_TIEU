@@ -126,23 +126,27 @@ function Thong_tin() {
                     <ThongBaoTinhTrang className={'good'} sodu={soDu} daSuDung={daSuDung}
                         dauVao={tienVao.map((item, index) => (
                             <div key={index}>
-                                <div className={cx('text-content')}>
-                                    <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
-                                    {'--date--'}
-                                    <span>{chuyenNgay(item.date)}</span>
-                                </div>
+                                <Card className={'wrapper-content-lich-su-big'}>
+                                    <div className={cx('text-content')}>
+                                        <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
+                                        {'--date--'}
+                                        <span>{chuyenNgay(item.date)}</span>
+                                    </div>
+                                </Card>
                             </div>
                         ))}
 
                         dauRa={tienRa.map((item, index) => (
                             <div key={index}>
-                                <div className={cx('text-content')}>
-                                    <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
-                                    {'--date--'}
-                                    <span>{chuyenNgay(item.date)}</span>
-                                    {'--type--'}
-                                    <span>{chuyenLoaiChiTieu(item.loaiChiTieu)}</span>
-                                </div>
+                                <Card className={'wrapper-content-lich-su-big'}>
+                                    <div className={cx('text-content')}>
+                                        <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
+                                        {'--date--'}
+                                        <span>{chuyenNgay(item.date)}</span>
+                                        {'--type--'}
+                                        <span>{chuyenLoaiChiTieu(item.loaiChiTieu)}</span>
+                                    </div>
+                                </Card>
                             </div>
                         ))}
 

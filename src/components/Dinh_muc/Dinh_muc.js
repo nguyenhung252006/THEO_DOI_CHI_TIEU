@@ -4,6 +4,7 @@ import style from './Dinh_muc.module.scss'
 //import component
 import Card from "../../cong_cu/Card/Card";
 import { Them_sua_xoa_dinh_muc as ThemSuaXoa } from "../../Tro_nang";
+import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan } from "../../alert";
 
 //import API_BASE_URL
 import { API_BASE_URL, API_ENDPOINTS } from "../../config";
@@ -58,6 +59,9 @@ function Dinh_muc() {
     const [soTienDinhMuc, setSoTienDinhMuc] = useState([])
     const [ngayDinhMuc, setNgayDinhMuc] = useState([])
 
+    //state check da sua va da ThemSuaXoa
+    const [isPost, setisPost] = useState(false)
+
     //function lay id
     const handleGetId = (id) => {
         setId(id)
@@ -74,7 +78,7 @@ function Dinh_muc() {
             await axios.post(`${API_ENDPOINTS.DINHMUC}/${UserId}`, dataPost, { withCredentials: true })
             setSoTienDinhMuc('')
             setNgayDinhMuc('')
-            alert('OK!')
+            setisPost(true)
             dataDinhMuc()
         } catch (err) {
             console.error('Error: ' + err)
@@ -142,6 +146,11 @@ function Dinh_muc() {
             const dataTienDaDungChiTieuKhac = res.data.chi_tieu_khac
             const soTienDaDungKhac = dataTienDaDungChiTieuKhac.map(item => Number(item.soTien))
 
+            //set lai isPost
+            setTimeout(() => {
+                setisPost(false)
+            }, 1000)
+
             //trong chi tieu
             const dataTienDaDungChiTieu = res.data.chi_tieu
             const soTienDaDungChiTieu = dataTienDaDungChiTieu.map(item => Number(item.soTien))
@@ -193,6 +202,7 @@ function Dinh_muc() {
 
     return (
         <>
+            {isPost && <ThanhCong />}
             <h1 className={cx('wrapper-text-content')}>Định mức chi tiêu</h1>
             {isChinhSua && (<ThemSuaXoa
                 loaiChiTieu="MUA_SAM"
@@ -253,25 +263,29 @@ function Dinh_muc() {
                                 </div>
                             </div>
                             <div className={cx('lich-su')}>
-                                <h1>Lịch sử thêm</h1>
-                                <Card className={'wrapper-content-history'}>
-                                    <div className={cx('text-lich-su')}>
-                                        {lichSu.map(item => (
-                                            <div className={cx('text-inline-lich-su')}>
-                                                <span
-                                                    onClick={() => {
-                                                        handleGetId(item.id)
-                                                        handleCheckChinhSua();
-                                                    }}
-                                                ><FontAwesomeIcon icon={faCircleInfo} /> {chuyenDinhDangTien(item.tien)} VNĐ</span>
-                                                {' || date:'}
-                                                <span>{chuyenNgay(item.date)}</span>
-                                                {' || số ngày thực hiện: '}
-                                                <span>{item.soNgay}</span>
+                                 <h1>Lịch sử thêm</h1>
+                                <div className={cx('text-lich-su')}>
+                                    {lichSu.map(item => (
+                                        <div className={cx('margin-content')}>
+                                            <div className={cx('card')}>
+                                                <Card className={'wrapper-content-lich-su-big'}>
+                                                    <div className={cx('wrapper-content')}>
+                                                        <span
+                                                            onClick={() => {
+                                                                handleGetId(item.id)
+                                                                handleCheckChinhSua();
+                                                            }}
+                                                        ><FontAwesomeIcon icon={faCircleInfo} /> {chuyenDinhDangTien(item.tien)} VNĐ</span>
+                                                        {' || date: '}
+                                                        <span>{chuyenNgay(item.date)}</span>
+                                                        {' || số ngày thực hiện: '}
+                                                        <span>{item.soNgay}</span>
+                                                    </div>
+                                                </Card>
                                             </div>
-                                        ))}
-                                    </div>
-                                </Card>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>

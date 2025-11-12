@@ -4,6 +4,8 @@ import style from './Muc_chi_tieu_an_uong.module.scss'
 //import component
 import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
 import { Them_sua_xoa as ThemSuaXoa } from "../../../Tro_nang";
+import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan } from "../../../alert";
+import Card from "../../../cong_cu/Card/Card";
 
 // import axios
 import axios from "axios"
@@ -32,11 +34,14 @@ function Muc_chi_tieu_an_uong({ }) {
     const [soDu, setSoDu] = useState([])
     const [daDung, setDaDung] = useState([])
     const [phanTram, setPhanTram] = useState([])
+
     // state lay thong bao
     const [thongBao, setThongBao] = useState([])
+
     // sate quan ly thong tin Post
     const [soTien, setSoTien] = useState([])
     const [ghiChu, setGhiChu] = useState(null)
+
 
     //state lay id
     const [id, setId] = useState('')
@@ -44,13 +49,16 @@ function Muc_chi_tieu_an_uong({ }) {
     //state set chinh Them_sua_xoa
     const [isChinhSua, setIsChinhSua] = useState(false)
 
+    //state check da sua va da ThemSuaXoa
+    const [isPost, setisPost] = useState(false)
+
     // Post du lieu mua sam
     const PostAnUong = async (dataToPost) => {
         try {
             await axios.post(`${API_ENDPOINTS.CHITIEU}/${UserId}`, dataToPost, { withCredentials: true })
             setSoTien('')
             setGhiChu('')
-            alert('OK!')
+            setisPost(true)
 
             //set lai state
             dataAnUong()
@@ -125,6 +133,10 @@ function Muc_chi_tieu_an_uong({ }) {
                 id: item.id,
                 date: item.thoiGianNhap,
             }))
+            //set lai isPost
+            setTimeout(() => {
+                setisPost(false)
+            }, 1000)
             setThongBao(dataThongBao)
         } catch (error) { console.error('Loi khi lay API' + error) }
     }
@@ -148,7 +160,8 @@ function Muc_chi_tieu_an_uong({ }) {
     return (
         <div className={cx('wrapper')}>
             <>
-                <span style={{color: "red"}}>ấn vào <FontAwesomeIcon icon={faCircleInfo} /> để chỉnh sửa hoặc xóa</span>
+                {isPost && <ThanhCong />}
+                <span style={{ color: "red" }}>ấn vào <FontAwesomeIcon icon={faCircleInfo} /> để chỉnh sửa hoặc xóa</span>
                 {isChinhSua && (<ThemSuaXoa
                     loaiChiTieu="AN_UONG"
                     id={id}
@@ -162,21 +175,23 @@ function Muc_chi_tieu_an_uong({ }) {
                 tenMuc={'Ăn Uống'}
                 daSuDung={daDung}
                 PhanTramDaSuDung={phanTram}
-                lichSu={thongBao.map(item => (
-                    <div key={item.id} className={cx('wrapper-content')}>
-                        <span
-                            onClick={() => {
-                                handleGetId(item.id)
-                                handleCheckChinhSua();
-                            }}
-                        ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
-                        {' || time: '}
-                        <span>{chuyenNgay(item.date)}</span>
-                        {' || ghi chú: '}
-                        {item?.ghiChu && <span>{item.ghiChu}</span>}
-                    </div>
-
-                ))}
+                lichSu={
+                    thongBao.map(item => (
+                        <Card className={'wrapper-content-lich-su'}>
+                            <div key={item.id} className={cx('wrapper-content')}>
+                                <span
+                                    onClick={() => {
+                                        handleGetId(item.id)
+                                        handleCheckChinhSua();
+                                    }}
+                                ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
+                                {' || time: '}
+                                <span>{chuyenNgay(item.date)}</span>
+                                {' || ghi chú: '}
+                                {item?.ghiChu && <span>{item.ghiChu}</span>}
+                            </div>
+                        </Card>
+                    ))}
                 onChangeGhiChu={handleChangeGhiChu}
                 onChangeSoTien={handleChangeSoTien}
                 onSubmit={handleSubmit}
