@@ -4,6 +4,7 @@ import style from './Muc_chi_tieu_khac.module.scss'
 //import component
 import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
 import { Them_sua_xoa_khac as ThemSuaXoa } from "../../../Tro_nang";
+import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan } from "../../../alert";
 import Card from "../../../cong_cu/Card/Card";
 
 // import axios
@@ -50,6 +51,9 @@ function Muc_chi_tieu_khac() {
     const [soTien, setSoTien] = useState([])
     const [tenKhoan, seTenKhoan] = useState(null)
 
+    //state check da sua va da ThemSuaXoa
+    const [isPost, setisPost] = useState(false)
+
     // function handle
     function handleChangeSoTien(e) {
         const inputValue = e.target.value
@@ -85,7 +89,7 @@ function Muc_chi_tieu_khac() {
             await axios.post(` ${API_ENDPOINTS.CHITIEUKHAC}/${UserId}`, dataPost, { withCredentials: true })
             setSoTien('')
             seTenKhoan('')
-            alert('OK!')
+            setisPost(true)
             dataMucChiTieuKhac()
         } catch (error) {
             console.error("Error : " + error)
@@ -119,6 +123,11 @@ function Muc_chi_tieu_khac() {
                 date: item.thoiGianNhap
             }))
             setThongBao(dataThongBao)
+
+            //set lai isPost
+            setTimeout(() => {
+                setisPost(false)
+            }, 1000)
 
             console.log(MucChiTieuKhac)
         } catch (err) {
@@ -155,6 +164,7 @@ function Muc_chi_tieu_khac() {
     return (
         <div className={cx('wrapper')}>
             <>
+                {isPost && <ThanhCong />}
                 <span style={{ color: "red" }}>ấn vào <FontAwesomeIcon icon={faCircleInfo} /> để chỉnh sửa hoặc xóa</span>
                 {isChinhSua && (<ThemSuaXoa
                     loaiChiTieu="MUA_SAM"
@@ -170,18 +180,18 @@ function Muc_chi_tieu_khac() {
                 daSuDung={daDung}
                 PhanTramDaSuDung={phanTram}
                 lichSu={thongBao.map(item => (
-                    <Card className={'wrapper-content-lich-su-big'}>
+                    <Card className={'wrapper-content-lich-su'}>
                         <div key={item.id} className={cx('wrapper-content')}>
                             <span
                                 onClick={() => {
                                     handleGetId(item.id)
                                     handleCheckChinhSua();
                                 }}
-    
+
                             ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
-                            {' || time: '}
+
                             <span>{chuyenNgay(item.date)}</span>
-                            {' || Tên khoản: '}
+
                             {item?.tenKhoan && <span>{item.tenKhoan}</span>}
                         </div>
                     </Card>

@@ -184,9 +184,9 @@ function Muc_chi_tieu_giai_tri({ }) {
                                         handleCheckChinhSua();
                                     }}
                                 ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
-                                {' || time: '}
+                                
                                 <span>{chuyenNgay(item.date)}</span>
-                                {' || ghi chú: '}
+                        
                                 {item?.ghiChu && <span>{item.ghiChu}</span>}
                             </div>
                         </Card>

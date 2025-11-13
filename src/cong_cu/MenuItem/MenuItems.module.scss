@@ -1,18 +1,61 @@
+.menu-item {
+  width: 100%;
+
+  &.open {
+
+    span {
+
+      color: red;
+    }
+  }
+}
+
 .menu-more-items {
   max-height: 0;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
   transition: all 0.5s ease-in-out;
+  border-bottom: 1px solid wheat;
 
-
-  button{
-    background-color: rgb(243, 237, 237);
-    text-align: center;
+  button {
+    background-color: rgba(231, 227, 227, 0.75);
+    text-align: start;
     padding: 12px 12px;
+    width: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(214, 210, 210, 0.9);
+      transform: translateX(3px);
+    }
   }
+
 
   &.open {
     max-height: 500px;
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.close {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.4s ease-in-out;
+  color: #555;
+  font-size: 14px;
+
+  &.rotate {
+    transform: rotate(180deg);
+  }
+}
+
+.active {
+  color: rgb(255, 0, 0);
 }

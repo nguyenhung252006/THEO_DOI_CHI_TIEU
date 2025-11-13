@@ -23,6 +23,12 @@ function Create() {
 
     const navigate = useNavigate()
 
+    //state luu tru tai khoan lay tu data 
+    const [taiKhoanData, setTaiKhoanData] = useState([])
+
+    //state luu tru Gmail
+    const [emaiData, setEmailData] = useState([])
+
     //state check de next sang phan setMatKhau
     const [isNext, setIsNext] = useState(false)
 
@@ -45,11 +51,24 @@ function Create() {
         try {
             const res = await axios.get(`${API_ENDPOINTS.ALLUSER}/`, { withCredentials: true })
             console.log(res.data)
+            // lay thong tin tai khoan cua nguoi dung
+            const dataTaiKhoan = res.data.map(item => item.taiKhoan)
+            setTaiKhoanData(dataTaiKhoan)
+            // lay thong tin email cua nguoi dung
+            const dataEmail = res.data.map(item => item.email)
+            setEmailData(dataEmail)
+
 
         } catch (err) {
             console.error(err)
         }
     }
+
+    // bien check xem co tai khoan khong 
+    const checkTaiKhoan = taiKhoanData.some(item => item === taiKhoan)
+
+    // bien check xem co gmail ton tai roi khong
+    const checkEmail = emaiData.some(item => item === email)
 
     //handle post
     const PostData = async (dataPost) => {
@@ -74,7 +93,7 @@ function Create() {
             email: email,
         }
 
-        if (hoTen === "" || !(regexDate.test(ngayThangNamSinh)) || sdt.length !== 10 || !(regexEmail.test(email)) || email === "" || sdt === "" || ngayThangNamSinh === "") {
+        if (checkEmail || checkTaiKhoan || hoTen === "" || !(regexDate.test(ngayThangNamSinh)) || sdt.length !== 10 || !(regexEmail.test(email)) || email === "" || sdt === "" || ngayThangNamSinh === "") {
             setIsRight(true)
             return
         }
@@ -82,7 +101,7 @@ function Create() {
         alert('Đăng kí thành công, chuyển lại trang đăng nhập sau 3 giây')
         setTimeout(() => {
             navigate("/login")
-        },3000)
+        }, 3000)
     }
 
     //lay data
@@ -155,7 +174,6 @@ function Create() {
         navigate("/login")
     }
 
-    console.log(ngayThangNamSinh)
     return (
         <div className={cx('wrapper')}>
             <div className={cx('background')}></div> {/* Ảnh nền */}
@@ -168,6 +186,7 @@ function Create() {
                         value={taiKhoan}
                     ></input>
                     {isRight && (<div>*chú ý: không được bỏ trống</div>)}
+                    {checkTaiKhoan && (<div>*chú ý: tài khoản đã tồn tại</div>)}
                     <label>Mật Khẩu Đăng Nhập</label>
                     <input
                         onChange={(e) => { handleMatKhau(e) }}
@@ -209,6 +228,7 @@ function Create() {
                         value={email}
                         type='email'></input>
                     {isRight && (<div>*chú ý: nguyenvana@example.com</div>)}
+                    {checkEmail && (<div>*Gmail đã được sử dụng</div>)}
                     <span onClick={() => { handleDangNhap() }}>Đăng Nhập</span>
                     <button onClick={() => { handleSubmit() }} className={cx('button-submit')}>Xác Nhận Tạo <FontAwesomeIcon icon={faArrowRight} /></button>
                 </div>

@@ -126,10 +126,9 @@ function Thong_tin() {
                     <ThongBaoTinhTrang className={'good'} sodu={soDu} daSuDung={daSuDung}
                         dauVao={tienVao.map((item, index) => (
                             <div key={index}>
-                                <Card className={'wrapper-content-lich-su-big'}>
-                                    <div className={cx('text-content')}>
+                                <Card className={'wrapper-content-lich-su-big-thong-tin'}>
+                                    <div className={cx('text-content-dau-vao')}>
                                         <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
-                                        {'--date--'}
                                         <span>{chuyenNgay(item.date)}</span>
                                     </div>
                                 </Card>
@@ -138,12 +137,10 @@ function Thong_tin() {
 
                         dauRa={tienRa.map((item, index) => (
                             <div key={index}>
-                                <Card className={'wrapper-content-lich-su-big'}>
-                                    <div className={cx('text-content')}>
+                                <Card className={'wrapper-content-lich-su-big-thong-tin'}>
+                                    <div className={cx('text-content-dau-ra')}>
                                         <span>{chuyenDinhDangTien(item.tien)} VNĐ</span>
-                                        {'--date--'}
                                         <span>{chuyenNgay(item.date)}</span>
-                                        {'--type--'}
                                         <span>{chuyenLoaiChiTieu(item.loaiChiTieu)}</span>
                                     </div>
                                 </Card>

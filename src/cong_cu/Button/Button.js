@@ -6,7 +6,7 @@ import style from './Button.scss'
 
 
 const cx = classNames.bind(style)
-function Button({ children, to, key, onClick }) {
+function Button({ children, to, key, onClick, className }) {
     return (
         <Link to={to}>
             <button onClick={onClick} key={key} className={cx('btn')}>{children}</button>

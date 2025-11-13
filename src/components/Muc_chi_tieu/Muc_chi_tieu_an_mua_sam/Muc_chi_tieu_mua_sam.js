@@ -183,16 +183,16 @@ function Muc_chi_tieu_mua_sam({ children }) {
                 lichSu={
                     thongBao.map(item => (
                         <Card className={'wrapper-content-lich-su'}>
-                            <div key={item.id} className={cx('wrapper-content')}> 
+                            <div key={item.id} className={cx('wrapper-content')}>
                                 <span
                                     onClick={() => {
                                         handleGetId(item.id)
                                         handleCheckChinhSua();
                                     }}
                                 ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
-                                {' || time: '}
+
                                 <span>{chuyenNgay(item.date)}</span>
-                                {' || ghi chú: '}
+
                                 {item?.ghiChu && <span>{item.ghiChu}</span>}
                             </div>
                         </Card>

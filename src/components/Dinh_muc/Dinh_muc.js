@@ -263,7 +263,7 @@ function Dinh_muc() {
                                 </div>
                             </div>
                             <div className={cx('lich-su')}>
-                                 <h1>Lịch sử thêm</h1>
+                                <h1>Lịch sử thêm</h1>
                                 <div className={cx('text-lich-su')}>
                                     {lichSu.map(item => (
                                         <div className={cx('margin-content')}>
@@ -276,9 +276,7 @@ function Dinh_muc() {
                                                                 handleCheckChinhSua();
                                                             }}
                                                         ><FontAwesomeIcon icon={faCircleInfo} /> {chuyenDinhDangTien(item.tien)} VNĐ</span>
-                                                        {' || date: '}
                                                         <span>{chuyenNgay(item.date)}</span>
-                                                        {' || số ngày thực hiện: '}
                                                         <span>{item.soNgay}</span>
                                                     </div>
                                                 </Card>
