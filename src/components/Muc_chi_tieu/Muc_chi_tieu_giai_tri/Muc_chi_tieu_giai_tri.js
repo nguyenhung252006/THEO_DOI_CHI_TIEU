@@ -175,22 +175,34 @@ function Muc_chi_tieu_giai_tri({ }) {
                 daSuDung={daDung}
                 PhanTramDaSuDung={phanTram}
                 lichSu={
-                    thongBao.map(item => (
-                        <Card className={'wrapper-content-lich-su'}>
-                            <div key={item.id} className={cx('wrapper-content')}>
-                                <span
-                                    onClick={() => {
-                                        handleGetId(item.id)
-                                        handleCheckChinhSua();
-                                    }}
-                                ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
-                                
-                                <span>{chuyenNgay(item.date)}</span>
-                        
-                                {item?.ghiChu && <span>{item.ghiChu}</span>}
-                            </div>
-                        </Card>
-                    ))}
+                    thongBao.length > 0 ? (
+                        thongBao.map(item => (
+                            <Card className={'wrapper-content-lich-su'}>
+                                <div key={item.id} className={cx('wrapper-content')}>
+                                    <span
+                                        onClick={() => {
+                                            handleGetId(item.id)
+                                            handleCheckChinhSua();
+                                        }}
+                                    ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
+
+                                    <span>{chuyenNgay(item.date)}</span>
+
+                                    {item?.ghiChu && <span>{item.ghiChu}</span>}
+                                </div>
+                            </Card>
+                        ))
+                    ) : (
+                        <span style={{
+                            display: "block",
+                            textAlign: "center",
+                            marginTop: "12px",
+                            color: "#888",
+                            fontStyle: "italic",
+                            fontSize: "14px",
+                        }}>*Chưa có lịch sử</span>
+                    )
+                }
                 onChangeGhiChu={handleChangeGhiChu}
                 onChangeSoTien={handleChangeSoTien}
                 onSubmit={handleSubmit}

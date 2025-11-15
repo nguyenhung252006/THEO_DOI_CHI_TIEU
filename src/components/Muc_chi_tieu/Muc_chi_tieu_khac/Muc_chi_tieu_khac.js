@@ -179,23 +179,36 @@ function Muc_chi_tieu_khac() {
                 tenMuc={'Mục Khác'}
                 daSuDung={daDung}
                 PhanTramDaSuDung={phanTram}
-                lichSu={thongBao.map(item => (
-                    <Card className={'wrapper-content-lich-su'}>
-                        <div key={item.id} className={cx('wrapper-content')}>
-                            <span
-                                onClick={() => {
-                                    handleGetId(item.id)
-                                    handleCheckChinhSua();
-                                }}
+                lichSu={
+                    thongBao.length > 0 ? (
+                        thongBao.map(item => (
+                            <Card className={'wrapper-content-lich-su'}>
+                                <div key={item.id} className={cx('wrapper-content')}>
+                                    <span
+                                        onClick={() => {
+                                            handleGetId(item.id)
+                                            handleCheckChinhSua();
+                                        }}
 
-                            ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
+                                    ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
 
-                            <span>{chuyenNgay(item.date)}</span>
+                                    <span>{chuyenNgay(item.date)}</span>
 
-                            {item?.tenKhoan && <span>{item.tenKhoan}</span>}
-                        </div>
-                    </Card>
-                ))}
+                                    {item?.tenKhoan && <span>{item.tenKhoan}</span>}
+                                </div>
+                            </Card>
+                        ))
+                    ) : (
+                        <span style={{
+                            display: "block",
+                            textAlign: "center",
+                            marginTop: "12px",
+                            color: "#888",
+                            fontStyle: "italic",
+                            fontSize: "14px",
+                        }}>*Chưa có lịch sử</span>
+                    )
+                }
                 onChangeSoTien={handleChangeSoTien}
                 valueSoTien={soTien}
                 valueKhac={tenKhoan}

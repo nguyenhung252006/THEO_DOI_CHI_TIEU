@@ -16,12 +16,12 @@ const Bieu_do_tron = ({ dataCompare }) => {
     <PieChart width={400} height={300}>
       <Pie
         data={data}
-        cx="50%" // Tâm trục x
-        cy="50%" // Tâm trục y
-        innerRadius={60} // Bán kính trong (nếu muốn tạo donut)
-        outerRadius={100} // Bán kính ngoài
+        cx="50%" 
+        cy="50%" 
+        innerRadius={60}
+        outerRadius={100}
         fill="#8884d8"
-        paddingAngle={5} // Khoảng cách giữa các phần
+        paddingAngle={5} 
         dataKey="value"
         label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`} 
       >

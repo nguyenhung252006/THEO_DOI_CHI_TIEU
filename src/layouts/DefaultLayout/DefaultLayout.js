@@ -1,4 +1,4 @@
-import classNames from "classnames/bind";
+ import classNames from "classnames/bind";
 import style from './DefaultLayout.module.scss'
 
 //import component

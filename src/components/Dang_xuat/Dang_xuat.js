@@ -14,7 +14,7 @@ function Dang_xuat({className, onLogin, onProfile}) {
         <div className={className}>
             <div className={cx('wrapper')}>
                 <div className={cx('select')}> 
-                    <span onClick={onProfile}><FontAwesomeIcon icon={faAddressCard}/> Thông tin</span>
+                    <span  className={cx('profile')} onClick={onProfile}><FontAwesomeIcon icon={faAddressCard}/> Thông tin</span>
                     <span onClick={onLogin} className={cx('login')}><FontAwesomeIcon icon={faRightToBracket}/> Đăng xuất</span>
                 </div>
             </div>

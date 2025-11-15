@@ -48,6 +48,8 @@ function Dinh_muc() {
 
     //state canh bao
     const [canhBao, setCanhBao] = useState([])
+    //state set goi y
+    const [goiY, setGoiY] = useState([])
 
     //state lay id
     const [id, setId] = useState('')
@@ -199,6 +201,20 @@ function Dinh_muc() {
         }
     }, [tienConLai]);
 
+    useEffect(() => {
+        if (tienConLai > 0) {
+            setGoiY(
+                <div>
+                    <span style={{ color: 'green' }}>
+                        bạn nên sử dụng {chuyenDinhDangTien(Math.abs(tienConLai))} VNĐ
+                    </span>
+                </div>
+            );
+        } else {
+            setGoiY(null);
+        }
+    }, [tienConLai]);
+
 
     return (
         <>
@@ -247,7 +263,7 @@ function Dinh_muc() {
                                         <div className={cx('text-content')}>
                                             <h3>Gợi ý</h3>
                                             <div className={cx('text-content')}>
-                                                <span style={{ color: "green", fontWeight: "600" }}>bạn nên sử dụng {chuyenDinhDangTien(tiLeChiTieu)} VNĐ mỗi ngày</span>
+                                                <span style={{ color: "green", fontWeight: "600" }}>{goiY}</span>
                                             </div>
                                         </div>
                                     </Card>
@@ -283,6 +299,16 @@ function Dinh_muc() {
                                             </div>
                                         </div>
                                     ))}
+                                    {!lichSu.length &&
+                                        <span style={{
+                                            display: "block",
+                                            textAlign: "center",
+                                            marginTop: "12px",
+                                            color: "#888",
+                                            fontStyle: "italic",
+                                            fontSize: "14px",
+                                        }}>*Chưa có lịch sử</span>
+                                    }
                                 </div>
                             </div>
                         </div>

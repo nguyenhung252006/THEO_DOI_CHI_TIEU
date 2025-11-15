@@ -6,7 +6,7 @@ import { Dang_xuat as DangXuat } from "../../../../components";
 
 //import icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faSackDollar } from "@fortawesome/free-solid-svg-icons";
 
 //import hook
 import { useState, useRef, useEffect } from "react";
@@ -55,13 +55,18 @@ function Avatar({ className, icon, name, img, ...props }) {
 
     return (
         <div className={className} ref={wrapperRef} {...props}>
+            <div>
+                <span><FontAwesomeIcon icon={faSackDollar} />SaVeMoNeY</span>
+            </div>
             <div className={cx('avatar-wrapper')}>
                 <div className={cx('content-avatar')}>
-                    <span
-                        onClick={() => { handleIsClick() }}
-                        className={cx('avatar-name')}>  <FontAwesomeIcon icon={faUser} />
-                        {name} {isClick && <DangXuat onProfile={() => { handleProfile() }} onLogin={() => { handleLogin() }} className={cx('dang-xuat-layout')} />}
-                    </span>
+                    <div className={cx('wrapper-logo')}>
+                        <span
+                            onClick={() => { handleIsClick() }}
+                            className={cx('avatar-name')}>  <FontAwesomeIcon icon={faUser} />
+                            {name} {isClick && <DangXuat onProfile={() => { handleProfile() }} onLogin={() => { handleLogin() }} className={cx('dang-xuat-layout')} />}
+                        </span>
+                    </div>
                 </div>
 
             </div>

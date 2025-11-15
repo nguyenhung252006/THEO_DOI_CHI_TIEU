@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-
-//
 import classNames from "classnames/bind";
-import style from './Button.scss'
+import style from "./Button.module.scss";
 
+const cx = classNames.bind(style);
 
-const cx = classNames.bind(style)
-function Button({ children, to, key, onClick, className }) {
+function Button({ children, to, onClick, className }) {
     return (
         <Link to={to}>
-            <button onClick={onClick} key={key} className={cx('btn')}>{children}</button>
+                <button onClick={onClick} className={cx("btn", className)}>
+                    {children}
+                </button>
         </Link>
     );
 }

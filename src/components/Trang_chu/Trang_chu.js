@@ -1,10 +1,14 @@
 import Card from "../../cong_cu/Card/Card";
 import { TextProfile } from "../../cong_cu";
 import BieuDo from '../../cong_cu/Bieu_do_tron/Bieu_do_tron';
+import Bieu_do_cot from "../../cong_cu/Bieu_do_cot/Bieu_do_cot";
 
 
 import classNames from "classnames/bind";
 import style from './Trang_chu.module.scss'
+
+// import dowload
+import { LoadingHook } from "../../hook";
 
 // import swiper
 import 'swiper/css';
@@ -23,6 +27,7 @@ import { API_BASE_URL, API_ENDPOINTS } from "../../config";
 //import ho tro
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
+
 const cx = classNames.bind(style)
 function Trang_chu() {
 
@@ -33,6 +38,12 @@ function Trang_chu() {
     const [soDu, setSoDu] = useState([])
     const [daSuDung, setDaSuDung] = useState([])
 
+    //state tinh so tien cua cac muc
+    const [muaSam, setMuaSam] = useState([])
+    const [anUong, setAnUong] = useState([])
+    const [giaiTri, setGiaiTri] = useState([])
+    const [khac, setKhac] = useState([])
+
     //state tinh con lai 
     const [conLai, setConLai] = useState([])
 
@@ -41,6 +52,7 @@ function Trang_chu() {
         try {
             const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
 
+            const chiTieuData = res.data.chi_tieu
             const chiTieu = res.data.chi_tieu.map(item => Number(item.soTien));
             const chiTieuKhac = res.data.chi_tieu_khac.map(item => Number(item.soTien));
             const tongDaSuDung = [...chiTieu, ...chiTieuKhac].reduce((a, b) => a + b, 0);
@@ -48,6 +60,22 @@ function Trang_chu() {
             const soDu = res.data.dinh_muc_chi_tieu.map(item => Number(item.soTienDinhMuc));
             const tongSoDu = soDu.reduce((a, b) => a + b, 0);
 
+            //lay chi tieu an uong
+            const chiTieuAnUong = chiTieuData.filter(item => item.loaiChiTieu === "AN_UONG")
+            setAnUong(chiTieuAnUong.map(item => Number(item.soTien)).reduce((a, b) => a + b, 0))
+
+            //lay chi tieu mua sam
+            const chiTieuMuaSam = chiTieuData.filter(item => item.loaiChiTieu === "MUA_SAM")
+            setMuaSam(chiTieuMuaSam.map(item => Number(item.soTien)).reduce((a, b) => a + b, 0))
+
+            //lay chi tieu giai tri
+            const chiTieuGiaiTri = chiTieuData.filter(item => item.loaiChiTieu === "GIAI_TRI")
+            setGiaiTri(chiTieuGiaiTri.map(item => Number(item.soTien)).reduce((a, b) => a + b, 0))
+
+            //lay chi tieu khac
+            setKhac(chiTieuKhac.reduce((a, b) => a + b, 0))
+
+            // lay va tinh toan du kieu
             setProfile(res.data.nguoi_dung);
             setDaSuDung(tongDaSuDung);
             setSoDu(tongSoDu);
@@ -66,14 +94,35 @@ function Trang_chu() {
         setConLai(Number(soDu - daSuDung))
     }, [soDu, daSuDung])
 
+
     return (
         <>
+            <LoadingHook apiUrl={`${API_ENDPOINTS.USERS}/${UserId}`}>
+                {(data) => {
+                    console.log("API data:", data)
+                }}
+            </LoadingHook>
             <div className={cx('wrapper')}>
                 <Card className={'wrapper-content'}>
-                    <h1>Gioi thieu</h1>
+                    <div className={cx('gioi-thieu-wrapper')}>
+                        <h1>Giới Thiệu</h1>
+                        <div>
+                            <div>Chào mừng bạn đến mới SaveMoney</div>
+                            <div>Ở đây bạn có thể xem lại các hoạt động chi tiêu của mình trong từng hạng mục riêng</div>
+                            <div>Tôi rất mong các bạn sẽ có một trải nghiệm tốt ở đây!</div>
+                            <div>Xin trân thành cảm ơn!</div>
+                            <div>Kí tên: </div>
+                            <div>SaveMoney</div>
+                        </div>
+                    </div>
                 </Card>
                 <Card className={'wrapper-content'}>
-                    <h1>Thong bao</h1>
+                    {profile?.hoTen && <div className={cx('xin-chao')}>
+                        <h1>Xin chào bạn!</h1>
+                        <div>
+                            <h3>{profile.hoTen}</h3>
+                        </div>
+                    </div>}
                 </Card>
             </div>
 
@@ -86,13 +135,38 @@ function Trang_chu() {
                 spaceBetween={9}
                 loop={false}
             >
-                <SwiperSlide><Card className={'wrapper-square'}></Card></SwiperSlide>
-                <SwiperSlide><Card className={'wrapper-square'}></Card></SwiperSlide>
-                <SwiperSlide><Card className={'wrapper-square'}></Card></SwiperSlide>
-                <SwiperSlide><Card className={'wrapper-square'}></Card></SwiperSlide>
-                <SwiperSlide><Card className={'wrapper-square'}></Card></SwiperSlide>
-                <SwiperSlide><Card className={'wrapper-square'}></Card></SwiperSlide>
-
+                <SwiperSlide><Card className={'wrapper-square'}>
+                    {muaSam > 0 ? (<div>
+                        <div>Mục chi tiêu: Mua Sắm</div>
+                        <div>Tổng số tiền: {chuyenDinhDangTien(muaSam)} VNĐ</div>
+                    </div>) : (
+                        <div>Chưa có thông tin</div>
+                    )}
+                </Card></SwiperSlide>
+                <SwiperSlide><Card className={'wrapper-square'}>
+                    {anUong > 0 ? (<div>
+                        <div>Mục chi tiêu: Ăn Uống</div>
+                        <div>Tổng số tiền: {chuyenDinhDangTien(anUong)} VNĐ</div>
+                    </div>) : (
+                        <div>Chưa có thông tin</div>
+                    )}
+                </Card></SwiperSlide>
+                <SwiperSlide><Card className={'wrapper-square'}>
+                    {giaiTri > 0 ? (<div>
+                        <div>Mục chi tiêu: Giải trí</div>
+                        <div>Tổng số tiền: {chuyenDinhDangTien(giaiTri)} VNĐ</div>
+                    </div>) : (
+                        <div>Chưa có thông tin</div>
+                    )}
+                </Card></SwiperSlide>
+                <SwiperSlide><Card className={'wrapper-square'}>
+                    {khac > 0 ? (<div>
+                        <div>Mục chi tiêu: Khác</div>
+                        <div>Tổng số tiền: {chuyenDinhDangTien(khac)} VNĐ</div>
+                    </div>) : (
+                        <div>Chưa có thông tin</div>
+                    )}
+                </Card></SwiperSlide>
             </Swiper>
 
             <div className={cx('wrapper')}>
@@ -107,16 +181,58 @@ function Trang_chu() {
                             />}
                         </Card>
                         <Card className={'wrapper-content'}>
-                            {conLai > 0 ? (<BieuDo
+                            {conLai > 0 && (<BieuDo
                                 dataCompare={[
                                     { name: 'Chi tiêu', value1: daSuDung, value2: (conLai) }
                                 ]}
-                            />) : (
+                            />)}
+
+                            {conLai < 0 && (
                                 <>
                                     <div className={cx('warning')}>
                                         <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
                                     </div>
                                 </>
+                            )}
+
+                            {(!conLai && !soDu && !daSuDung) && (
+                                <span style={{
+                                    display: "block",
+                                    textAlign: "center",
+                                    marginTop: "12px",
+                                    color: "#888",
+                                    fontStyle: "italic",
+                                    fontSize: "14px",
+                                }}>*Chưa có dữ liệu</span>
+                            )}
+
+                        </Card>
+                        <Card className={'wrapper-content'}>
+                            {conLai > 0 && (<Bieu_do_cot
+                                anUong={Number(anUong) || 0}
+                                muaSam={Number(muaSam) || 0}
+                                giaiTri={Number(giaiTri) || 0}
+                                khac={Number(khac) || 0}
+                                dinhMuc={Number(soDu) || 0}
+                            />)}
+
+                            {conLai < 0 && (
+                                <>
+                                    <div className={cx('warning')}>
+                                        <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
+                                    </div>
+                                </>
+                            )}
+
+                            {(!conLai && !soDu && !daSuDung) && (
+                                <span style={{
+                                    display: "block",
+                                    textAlign: "center",
+                                    marginTop: "12px",
+                                    color: "#888",
+                                    fontStyle: "italic",
+                                    fontSize: "14px",
+                                }}>*Chưa có dữ liệu</span>
                             )}
 
                         </Card>

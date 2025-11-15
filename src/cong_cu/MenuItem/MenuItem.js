@@ -43,7 +43,7 @@ function MenuItem({ item }) {
                     {item.title}
                     {item.children && (
                         <span>
-                            <FontAwesomeIcon
+                            <FontAwesomeIcon className={cx('close', { rotate: open })}
                                 icon={faCaretDown}
                             />
                         </span>

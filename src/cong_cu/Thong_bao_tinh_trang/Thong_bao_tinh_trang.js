@@ -12,16 +12,18 @@ function Thong_bao_tinh_trang({ sodu, daSuDung, className, dauRa, dauVao, dateVa
             <div className={cx('wrapper-content')}>
                 <>
                     {sodu !== 0 ? (
-                        <p>Số dư: <span className={cx(className)}>{chuyenDinhDangTien(sodu)} VNĐ</span></p>
+                        <p style={{color: "green"}}>Số dư: <span className={cx(className)}>{chuyenDinhDangTien(sodu)} VNĐ</span></p>
                     ) : (
                         <>
-                            <p>Số dư: <span className={cx(className)}>{chuyenDinhDangTien(sodu)} VNĐ</span></p>
+                            <p style={{color: "green"}}>Số dư: <span className={cx(className)}>{chuyenDinhDangTien(sodu)} 0 VNĐ</span></p>
                         </>
                     )}
                 </>
                 <>
-                    {daSuDung !== 0 && (
-                        <p>Đã sử dụng: <span className={cx(className)}>{chuyenDinhDangTien(daSuDung)} VNĐ</span></p>
+                    {daSuDung !== 0 ? (
+                        <p style={{color: "red"}}>Đã sử dụng: <span className={cx(className)}>{chuyenDinhDangTien(daSuDung)} VNĐ</span></p>
+                    ) : (
+                        <p style={{color: "red"}}>Đã sử dụng: <span className={cx(className)}>{chuyenDinhDangTien(daSuDung)} 0 VNĐ</span></p>
                     )}
                 </>
             </div>

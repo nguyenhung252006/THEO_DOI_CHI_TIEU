@@ -19,7 +19,11 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, n
                         <div className={cx('wrapper')}>
                             <h1 className={cx('name-page')}>{tenMuc}</h1>
                             <div className={cx('content')}>
-                                <p>Đã sử dụng: <span className={cx('use')}>{chuyenDinhDangTien(daSuDung)} VNĐ</span></p>
+                                {daSuDung !== 0 ? (
+                                    <p>Đã sử dụng: <span className={cx('use')}>{chuyenDinhDangTien(daSuDung)} VNĐ</span></p>
+                                ) : (
+                                    <p>Đã sử dụng: <span className={cx('use')}>0 VNĐ</span></p>
+                                )}
                                 <p>Số phần trăm đã sử dụng so với định mức (%): <span className={cx('phan-tram')}>{PhanTramDaSuDung}%</span></p>
                             </div>
                         </div>

@@ -6,6 +6,8 @@ import Card from "../../cong_cu/Card/Card";
 import { TextProfile } from "../../cong_cu";
 import ThongBaoTinhTrang from "../../cong_cu/Thong_bao_tinh_trang/Thong_bao_tinh_trang";
 
+import { LoadingHook } from "../../hook";
+
 // import hook
 import { useState, useEffect } from "react";
 
@@ -93,6 +95,11 @@ function Thong_tin() {
 
     return (
         <>
+            <LoadingHook apiUrl={`${API_ENDPOINTS.USERS}/${UserId}`}>
+                {(data) => {
+                    console.log("API data:", data)
+                }}
+            </LoadingHook>
             <div className={cx('wrapper')}>
 
                 <Card className={'wrapper-content-items-center'}>
@@ -102,6 +109,7 @@ function Thong_tin() {
                                 name={profile.hoTen}
                                 email={profile.email}
                                 soDu={soDu}
+                                daSuDung={daSuDung}
                             />}
                         </>
                     </div>
@@ -123,7 +131,7 @@ function Thong_tin() {
             </div>
             <div className={cx('wrapper')} >
                 <Card className={'wrapper-content'}>
-                    <ThongBaoTinhTrang className={'good'} sodu={soDu} daSuDung={daSuDung}
+                    <ThongBaoTinhTrang className={''} sodu={soDu} daSuDung={daSuDung}
                         dauVao={tienVao.map((item, index) => (
                             <div key={index}>
                                 <Card className={'wrapper-content-lich-su-big-thong-tin'}>

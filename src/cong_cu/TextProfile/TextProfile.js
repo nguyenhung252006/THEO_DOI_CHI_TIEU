@@ -11,7 +11,7 @@ function TextProfile({ name, email, soDu, sdt, daSuDung, id }) {
             <div className={cx('wrapper')}>
                 <h1 className={cx('text-name')}>{name}</h1>   {/* ten */}
                 <div className={cx('wrapper-info')}>
-                    
+
                     {id &&
                         <>
                             <p className={cx('text-id')}>ID: {id}</p>
@@ -33,15 +33,20 @@ function TextProfile({ name, email, soDu, sdt, daSuDung, id }) {
                         </>
                     ) : (
                         <>
-                            <p className={cx('text-sodu')}>Số dư: 0</p>
+                            <p className={cx('text-sodu')}>Số dư: 0 VNĐ</p>
                         </>
                     )
-                        
+
                     }
-                    {daSuDung !== 0 &&
-                        <>
+                    {daSuDung !== 0 ?
+                        (<>
                             <p className={cx('text-dasudung')}>Đã sử dụng:  {chuyenDinhDangTien(daSuDung)} VNĐ</p>
                         </>
+                        ) : (
+                            <>
+                                <p className={cx('text-dasudung')}>Đã sử dụng: 0 VNĐ</p>
+                            </>
+                        )
                     }
                 </div>
             </div>
