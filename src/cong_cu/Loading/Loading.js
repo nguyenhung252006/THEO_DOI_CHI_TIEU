@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faHourglassEnd } from "@fortawesome/free-solid-svg-icons";
 
 import classNames from "classnames/bind";
 import style from "./Loading.module.scss";
@@ -8,7 +8,7 @@ const cx = classNames.bind(style)
 function Loading() {
     return ( 
         <div className={cx('wrapper-loading')}>
-            <FontAwesomeIcon icon={faSpinner}/>
+            <FontAwesomeIcon icon={faHourglassEnd}/>
         </div>
      );
 }

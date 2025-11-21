@@ -2,21 +2,23 @@
     display: flex;
     flex-direction: row;
     gap: 25px;
-    box-sizing: content-box;
+    box-sizing: border-box;
 }
 
 .wrapper {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    height: 100%;
 }
 
 .content {
     border-top: 1px wheat solid;
     padding: 0 12px;
-    margin: 0 24px;
+    margin: 0;
 
     p {
         margin: 24px 0;
@@ -26,11 +28,10 @@
 
 .name-page {
     text-align: center;
-    margin: 12px 12px;
+    margin: 0;
     margin-bottom: 30px;
     width: 100%;
-    height: 50px;
-    padding: 0 10px;
+    height: 100%;
     background: linear-gradient(90deg,
             red,
             orange,
@@ -84,8 +85,7 @@ label {
 
     &:focus {
         background-color: rgba(94, 255, 1, 0.1);
-        transform: translateX(-2px);
-        transform: translateY(+2px);
+        transform: none;
     }
 }
 
@@ -118,8 +118,10 @@ label {
     color: var(--good);
 }
 
-
-
+.thong-bao {
+    margin: 24px 24px;
+    width: 100%;
+}
 
 @keyframes gradientMove {
     0% {

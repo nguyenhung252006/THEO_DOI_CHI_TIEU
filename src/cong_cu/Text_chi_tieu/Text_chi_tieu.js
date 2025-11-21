@@ -67,8 +67,8 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, n
                     </Card>
                 </div>
 
-                <Card className={'wrapper-content-lich-su-big'}>
-                    <div>
+                <Card className={'wrapper-content'}>
+                    <div className={cx('thong-bao')}>
                         {lichSu}
                     </div>
                 </Card >

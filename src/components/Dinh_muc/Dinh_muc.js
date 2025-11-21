@@ -6,6 +6,9 @@ import Card from "../../cong_cu/Card/Card";
 import { Them_sua_xoa_dinh_muc as ThemSuaXoa } from "../../Tro_nang";
 import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan } from "../../alert";
 
+// import dowload
+import { LoadingHook } from "../../hook";
+
 //import API_BASE_URL
 import { API_BASE_URL, API_ENDPOINTS } from "../../config";
 
@@ -21,7 +24,7 @@ import chuyenNgay from "../../ho_tro/chuyen_ngay";
 
 //import icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 
 const cx = classNames.bind(style)
@@ -206,7 +209,7 @@ function Dinh_muc() {
             setGoiY(
                 <div>
                     <span style={{ color: 'green' }}>
-                        bạn nên sử dụng {chuyenDinhDangTien(Math.abs(tienConLai))} VNĐ
+                        Bạn nên sử dụng {chuyenDinhDangTien(Math.abs(tienConLai))} VNĐ / Ngày
                     </span>
                 </div>
             );
@@ -218,6 +221,11 @@ function Dinh_muc() {
 
     return (
         <>
+            <LoadingHook apiUrl={`${API_ENDPOINTS.USERS}/${UserId}`}>
+                {(data) => {
+                    console.log("API data:", data)
+                }}
+            </LoadingHook>
             {isPost && <ThanhCong />}
             <h1 className={cx('wrapper-text-content')}>Định mức chi tiêu</h1>
             {isChinhSua && (<ThemSuaXoa
@@ -227,7 +235,7 @@ function Dinh_muc() {
                 onClose={() => setIsChinhSua(false)}
             />)}
             <div className={cx('wrapper')}>
-                <span style={{ color: "red" }}>ấn vào <FontAwesomeIcon icon={faCircleInfo} /> để chỉnh sửa hoặc xóa</span>
+                
                 <Card className={'wrapper-content-dinh-muc'}>
                     <div className={cx('content')}>
                         <div className={cx('wrapper-input')}>
@@ -291,7 +299,7 @@ function Dinh_muc() {
                                                                 handleGetId(item.id)
                                                                 handleCheckChinhSua();
                                                             }}
-                                                        ><FontAwesomeIcon icon={faCircleInfo} /> {chuyenDinhDangTien(item.tien)} VNĐ</span>
+                                                        ><FontAwesomeIcon icon={faPenToSquare} /> {chuyenDinhDangTien(item.tien)} VNĐ</span>
                                                         <span>{chuyenNgay(item.date)}</span>
                                                         <span>{item.soNgay}</span>
                                                     </div>

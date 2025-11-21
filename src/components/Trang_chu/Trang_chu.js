@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import Card from "../../cong_cu/Card/Card";
 import { TextProfile } from "../../cong_cu";
 import BieuDo from '../../cong_cu/Bieu_do_tron/Bieu_do_tron';
@@ -10,14 +11,12 @@ import style from './Trang_chu.module.scss'
 // import dowload
 import { LoadingHook } from "../../hook";
 
-// import swiper
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+//import component
+import { Canh_bao as CanhBao, Hang_muc_chi_tieu as HangMucChiTieu } from "../../alert";
 
 // import axios
 import axios from "axios";
+
 // import Hook React
 import { useState, useEffect } from "react";
 
@@ -26,6 +25,10 @@ import { API_BASE_URL, API_ENDPOINTS } from "../../config";
 
 //import ho tro
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
+
+//import icon
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoneyCheck, faBell } from "@fortawesome/free-solid-svg-icons";
 
 
 const cx = classNames.bind(style)
@@ -43,6 +46,12 @@ function Trang_chu() {
     const [anUong, setAnUong] = useState([])
     const [giaiTri, setGiaiTri] = useState([])
     const [khac, setKhac] = useState([])
+
+    //state check active cua nut more-select
+    const [active, setActive] = useState(false)
+
+    //state check active cua canh bao
+    const [isActiveCanhBao, setIsActiveCanhBao] = useState(false)
 
     //state tinh con lai 
     const [conLai, setConLai] = useState([])
@@ -95,6 +104,26 @@ function Trang_chu() {
     }, [soDu, daSuDung])
 
 
+    //handle active
+    const handleActive = () => {
+        setActive(prev => !prev)
+        setIsActiveCanhBao(prev => {
+            if (prev === true) {
+                prev = false
+            }
+        })
+    }
+
+    //handle active canh bao
+    const handleActiveCanhBao = () => {
+        setIsActiveCanhBao(prev => !prev)
+        setActive(prev => {
+            if (prev === true) {
+                prev = false
+            }
+        })
+    }
+
     return (
         <>
             <LoadingHook apiUrl={`${API_ENDPOINTS.USERS}/${UserId}`}>
@@ -126,48 +155,26 @@ function Trang_chu() {
                 </Card>
             </div>
 
+
+            {/* option */}
+            <div className={cx('option')}>
+                <div className={cx('more-select')}>
+                    <button onClick={() => { handleActive() }}><FontAwesomeIcon className={cx({ rotate: active })} icon={faMoneyCheck} /></button>
+                </div>
+                <div className={cx('more-select')}>
+                    <button onClick={() => { handleActiveCanhBao() }}><FontAwesomeIcon icon={faBell} /></button>
+                </div>
+            </div>
+
             {/* phan nay hien thi cac muc chi tieu gom cac the */}
-            <Swiper
-                modules={[Navigation]}
-                navigation
-                slidesPerView={4}
-                slidesPerGroup={1}
-                spaceBetween={9}
-                loop={false}
-            >
-                <SwiperSlide><Card className={'wrapper-square'}>
-                    {muaSam > 0 ? (<div>
-                        <div>Mục chi tiêu: Mua Sắm</div>
-                        <div>Tổng số tiền: {chuyenDinhDangTien(muaSam)} VNĐ</div>
-                    </div>) : (
-                        <div>Chưa có thông tin</div>
-                    )}
-                </Card></SwiperSlide>
-                <SwiperSlide><Card className={'wrapper-square'}>
-                    {anUong > 0 ? (<div>
-                        <div>Mục chi tiêu: Ăn Uống</div>
-                        <div>Tổng số tiền: {chuyenDinhDangTien(anUong)} VNĐ</div>
-                    </div>) : (
-                        <div>Chưa có thông tin</div>
-                    )}
-                </Card></SwiperSlide>
-                <SwiperSlide><Card className={'wrapper-square'}>
-                    {giaiTri > 0 ? (<div>
-                        <div>Mục chi tiêu: Giải trí</div>
-                        <div>Tổng số tiền: {chuyenDinhDangTien(giaiTri)} VNĐ</div>
-                    </div>) : (
-                        <div>Chưa có thông tin</div>
-                    )}
-                </Card></SwiperSlide>
-                <SwiperSlide><Card className={'wrapper-square'}>
-                    {khac > 0 ? (<div>
-                        <div>Mục chi tiêu: Khác</div>
-                        <div>Tổng số tiền: {chuyenDinhDangTien(khac)} VNĐ</div>
-                    </div>) : (
-                        <div>Chưa có thông tin</div>
-                    )}
-                </Card></SwiperSlide>
-            </Swiper>
+            {active && <HangMucChiTieu
+                muaSam={muaSam}
+                anUong={anUong}
+                giaiTri={giaiTri}
+                khac={khac}
+            />}
+            {/* canh bao cua trang chu */}
+            {isActiveCanhBao && <CanhBao trangChu />}
 
             <div className={cx('wrapper')}>
                 <Card className={'wrapper-content'}>

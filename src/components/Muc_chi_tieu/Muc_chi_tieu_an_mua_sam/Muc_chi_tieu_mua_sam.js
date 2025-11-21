@@ -13,6 +13,7 @@ import axios from "axios"
 
 // import hook
 import { useState, useEffect } from "react";
+import { LoadingHook } from "../../../hook";
 
 //import API_BASE_URL
 import { API_BASE_URL, API_ENDPOINTS } from "../../../config";
@@ -23,7 +24,7 @@ import chuyenDinhDangTien from "../../../ho_tro/chuyen_dinh_dang_tien";
 
 //import icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(style)
 function Muc_chi_tieu_mua_sam({ children }) {
@@ -163,59 +164,66 @@ function Muc_chi_tieu_mua_sam({ children }) {
     }, [daDung, soDu]);
 
     return (
-        <div className={cx('wrapper')}>
-            <>
-                {isPost && <ThanhCong />}
-                <span style={{ color: "red" }}>ấn vào <FontAwesomeIcon icon={faCircleInfo} /> để chỉnh sửa hoặc xóa</span>
-                {isChinhSua && (<ThemSuaXoa
-                    loaiChiTieu="MUA_SAM"
-                    id={id}
-                    onReload={dataMuaSam}
-                    onClose={() => setIsChinhSua(false)}
-                />)}
-            </>
-            {<ContentChiTieu
-                notKhac
-                nhapLieu={'Ghi chú ( nếu có )'}
-                tenMuc={'Mua Sắm'}
-                daSuDung={daDung}
-                PhanTramDaSuDung={phanTram}
-                lichSu={
-                    thongBao.length > 0 ? (
-                        thongBao.map(item => (
-                            <Card className={'wrapper-content-lich-su'}>
-                                <div key={item.id} className={cx('wrapper-content')}>
-                                    <span
-                                        onClick={() => {
-                                            handleGetId(item.id)
-                                            handleCheckChinhSua();
-                                        }}
-                                    ><FontAwesomeIcon icon={faCircleInfo} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
-
-                                    <span>{chuyenNgay(item.date)}</span>
-
-                                    {item?.ghiChu && <span>{item.ghiChu}</span>}
-                                </div>
-                            </Card>
-                        ))
-                    ) : (
-                        <span style={{
-                            display: "block",
-                            textAlign: "center",
-                            marginTop: "12px",
-                            color: "#888",
-                            fontStyle: "italic",
-                            fontSize: "14px",
-                        }}>*Chưa có lịch sử</span>
-                    )
-                }
-                onChangeGhiChu={handleChangeGhiChu}
-                onChangeSoTien={handleChangeSoTien}
-                onSubmit={handleSubmit}
-                valueGhiChu={ghiChu}
-                valueSoTien={soTien}
-            />}
-        </div>
+        <>
+            <LoadingHook apiUrl={`${API_ENDPOINTS.USERS}/${UserId}`}>
+                    {(data) => {
+                        console.log("API data:", data)
+                    }}
+                </LoadingHook>
+            <div className={cx('wrapper')}>
+                <>
+                    {isPost && <ThanhCong />}
+                    
+                    {isChinhSua && (<ThemSuaXoa
+                        loaiChiTieu="MUA_SAM"
+                        id={id}
+                        onReload={dataMuaSam}
+                        onClose={() => setIsChinhSua(false)}
+                    />)}
+                </>
+                {<ContentChiTieu
+                    notKhac
+                    nhapLieu={'Ghi chú ( nếu có )'}
+                    tenMuc={'Mua Sắm'}
+                    daSuDung={daDung}
+                    PhanTramDaSuDung={phanTram}
+                    lichSu={
+                        thongBao.length > 0 ? (
+                            thongBao.map(item => (
+                                <Card className={'wrapper-content-lich-su'}>
+                                    <div key={item.id} className={cx('wrapper-content')}>
+                                        <span
+                                            onClick={() => {
+                                                handleGetId(item.id)
+                                                handleCheckChinhSua();
+                                            }}
+                                        ><FontAwesomeIcon icon={faPenToSquare} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
+    
+                                        <span>{chuyenNgay(item.date)}</span>
+    
+                                        {item?.ghiChu && <span>{item.ghiChu}</span>}
+                                    </div>
+                                </Card>
+                            ))
+                        ) : (
+                            <span style={{
+                                display: "block",
+                                textAlign: "center",
+                                marginTop: "12px",
+                                color: "#888",
+                                fontStyle: "italic",
+                                fontSize: "14px",
+                            }}>*Chưa có lịch sử</span>
+                        )
+                    }
+                    onChangeGhiChu={handleChangeGhiChu}
+                    onChangeSoTien={handleChangeSoTien}
+                    onSubmit={handleSubmit}
+                    valueGhiChu={ghiChu}
+                    valueSoTien={soTien}
+                />}
+            </div>
+        </>
     );
 }
 

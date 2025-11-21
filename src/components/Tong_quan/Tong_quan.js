@@ -1,9 +1,13 @@
+/* eslint-disable react/jsx-pascal-case */
 import classNames from "classnames/bind";
 import style from './Tong_quan.module.scss'
 
 //import bieu do
 import BieuDo from '../../cong_cu/Bieu_do_tron/Bieu_do_tron';
 import Bieu_do_cot from "../../cong_cu/Bieu_do_cot/Bieu_do_cot";
+
+//import hook
+import { LoadingHook } from "../../hook";
 
 //import component
 import Card from "../../cong_cu/Card/Card";
@@ -113,110 +117,117 @@ function Tong_quan() {
     }, [conLai]);
 
     return (
-        <div className={cx('wrapper')}>
-            <h1>Đánh giá tổng quan</h1>
-            <Card className={'wrapper-content'}>
-                <div className={cx('wrapper-content')}>
-                    <div className={cx('tong-quan-text')}>
-                        <h3>Số dư-Đã sử dụng</h3>
-                        {soDu !==0 ? (
-                            <div >Số Dư: <span style={{ color: "green" }}>{chuyenDinhDangTien(soDu)} VNĐ</span></div>
-                        ) : (
-                            <div >Số Dư: <span style={{ color: "green" }}>0 VNĐ</span></div>
-                        )}
-                        {daSuDung !== 0 ? (
-                            <div>Đã sử dụng:   <span style={{ color: "red" }}>{chuyenDinhDangTien(daSuDung)} VNĐ</span></div>
-                        ) : (
-                            <div>Đã sử dụng:   <span style={{ color: "red" }}>0 VNĐ</span></div>
-                        )}
+        <>
+            <LoadingHook apiUrl={`${API_ENDPOINTS.USERS}/${UserId}`}>
+                    {(data) => {
+                        console.log("API data:", data)
+                    }}
+                </LoadingHook>
+            <div className={cx('wrapper')}>
+                <h1>Đánh giá tổng quan</h1>
+                <Card className={'wrapper-content'}>
+                    <div className={cx('wrapper-content')}>
+                        <div className={cx('tong-quan-text')}>
+                            <h3>Số dư-Đã sử dụng</h3>
+                            {soDu !== 0 ? (
+                                <div >Số Dư: <span style={{ color: "green" }}>{chuyenDinhDangTien(soDu)} VNĐ</span></div>
+                            ) : (
+                                <div >Số Dư: <span style={{ color: "green" }}>0 VNĐ</span></div>
+                            )}
+                            {daSuDung !== 0 ? (
+                                <div>Đã sử dụng:   <span style={{ color: "red" }}>{chuyenDinhDangTien(daSuDung)} VNĐ</span></div>
+                            ) : (
+                                <div>Đã sử dụng:   <span style={{ color: "red" }}>0 VNĐ</span></div>
+                            )}
+                        </div>
+                        <div>
+                            <h3>Mức sử dụng của các mục</h3>
+                            {anUong !== 0 ? (
+                                <div>Ăn Uống: <span>{chuyenDinhDangTien(anUong)} VNĐ</span></div>
+                            ) : (
+                                <div>Ăn Uống: <span>0 VNĐ</span></div>
+                            )}
+                            {muaSam !== 0 ? (
+                                <div>Mua Sắm: <span>{chuyenDinhDangTien(muaSam)} VNĐ</span></div>
+                            ) : (
+                                <div>Mua Sắm: <span>0 VNĐ</span></div>
+                            )}{giaiTri !== 0 ? (
+                                <div>Giải Trí: <span>{chuyenDinhDangTien(giaiTri)} VNĐ</span></div>
+                            ) : (
+                                <div>Giải Trí: <span>0 VNĐ</span></div>
+                            )}{khac !== 0 ? (
+                                <div>Mục Khác: <span>{chuyenDinhDangTien(khac)} VNĐ</span></div>
+                            ) : (
+                                <div>Mục Khác: <span>0 VNĐ</span></div>
+                            )}
+                        </div>
+                        <div>
+                            {canhBao}
+                        </div>
                     </div>
-                    <div>
-                        <h3>Mức sử dụng của các mục</h3>
-                        {anUong !== 0 ? (
-                            <div>Ăn Uống: <span>{chuyenDinhDangTien(anUong)} VNĐ</span></div>
-                        ) : (
-                            <div>Ăn Uống: <span>0 VNĐ</span></div>
+                </Card>
+                <br></br>
+                <h1>Biểu đồ</h1>
+                <div className={cx('wrapper-bieu-do')}>
+                    <Card className={'wrapper-content'}>
+                        {conLai > 0 && (<Bieu_do_cot
+                            anUong={Number(anUong) || 0}
+                            muaSam={Number(muaSam) || 0}
+                            giaiTri={Number(giaiTri) || 0}
+                            khac={Number(khac) || 0}
+                            dinhMuc={Number(soDu) || 0}
+                        />)}
+    
+                        {conLai < 0 && (
+                            <>
+                                <div className={cx('warning')}>
+                                    <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
+                                </div>
+                            </>
                         )}
-                        {muaSam !== 0 ? (
-                            <div>Mua Sắm: <span>{chuyenDinhDangTien(muaSam)} VNĐ</span></div>
-                        ) : (
-                            <div>Mua Sắm: <span>0 VNĐ</span></div>
-                        )}{giaiTri !== 0 ? (
-                            <div>Giải Trí: <span>{chuyenDinhDangTien(giaiTri)} VNĐ</span></div>
-                        ) : (
-                            <div>Giải Trí: <span>0 VNĐ</span></div>
-                        )}{khac !== 0 ? (
-                            <div>Mục Khác: <span>{chuyenDinhDangTien(khac)} VNĐ</span></div>
-                        ) : (
-                            <div>Mục Khác: <span>0 VNĐ</span></div>
+    
+                        {(!conLai && !soDu && !daSuDung) && (
+                            <span style={{
+                                display: "block",
+                                textAlign: "center",
+                                marginTop: "12px",
+                                color: "#888",
+                                fontStyle: "italic",
+                                fontSize: "14px",
+                            }}>*Chưa có dữ liệu</span>
                         )}
-                    </div>
-                    <div>
-                        {canhBao}
-                    </div>
+    
+                    </Card>
+                    <Card className={'wrapper-content'}>
+                        {conLai > 0 && (<BieuDo
+                            dataCompare={[
+                                { name: 'Chi tiêu', value1: daSuDung, value2: (conLai) }
+                            ]}
+                        />)}
+    
+                        {conLai < 0 && (
+                            <>
+                                <div className={cx('warning')}>
+                                    <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
+                                </div>
+                            </>
+                        )}
+    
+                        {(!conLai && !soDu && !daSuDung) && (
+                            <span style={{
+                                display: "block",
+                                textAlign: "center",
+                                marginTop: "12px",
+                                color: "#888",
+                                fontStyle: "italic",
+                                fontSize: "14px",
+                            }}>*Chưa có dữ liệu</span>
+                        )}
+    
+                    </Card>
                 </div>
-            </Card>
-            <br></br>
-            <h1>Biểu đồ</h1>
-            <div className={cx('wrapper-bieu-do')}>
-                <Card className={'wrapper-content'}>
-                    {conLai > 0 && (<Bieu_do_cot
-                        anUong={Number(anUong) || 0}
-                        muaSam={Number(muaSam) || 0}
-                        giaiTri={Number(giaiTri) || 0}
-                        khac={Number(khac) || 0}
-                        dinhMuc={Number(soDu) || 0}
-                    />)}
-
-                    {conLai < 0 && (
-                        <>
-                            <div className={cx('warning')}>
-                                <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
-                            </div>
-                        </>
-                    )}
-
-                    {(!conLai && !soDu && !daSuDung) && (
-                        <span style={{
-                            display: "block",
-                            textAlign: "center",
-                            marginTop: "12px",
-                            color: "#888",
-                            fontStyle: "italic",
-                            fontSize: "14px",
-                        }}>*Chưa có dữ liệu</span>
-                    )}
-
-                </Card>
-                <Card className={'wrapper-content'}>
-                    {conLai > 0 && (<BieuDo
-                        dataCompare={[
-                            { name: 'Chi tiêu', value1: daSuDung, value2: (conLai) }
-                        ]}
-                    />)}
-
-                    {conLai < 0 && (
-                        <>
-                            <div className={cx('warning')}>
-                                <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
-                            </div>
-                        </>
-                    )}
-
-                    {(!conLai && !soDu && !daSuDung) && (
-                        <span style={{
-                            display: "block",
-                            textAlign: "center",
-                            marginTop: "12px",
-                            color: "#888",
-                            fontStyle: "italic",
-                            fontSize: "14px",
-                        }}>*Chưa có dữ liệu</span>
-                    )}
-
-                </Card>
             </div>
-        </div>
+        </>
     );
 }
 

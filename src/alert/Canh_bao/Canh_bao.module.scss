@@ -1,0 +1,71 @@
+.wrapper {
+    width: 96.2%;
+    margin: 24px 15px;
+}
+
+.wrapper-content {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    gap: 20px;
+    margin: 24px 24px;
+    justify-content: space-between;
+
+    >div:nth-child(2) {
+        >div {
+            margin: 12px 12px;
+            font-weight: 600;
+
+            >span {
+                color: green;
+                font-weight: 600;
+            }
+        }
+    }
+
+}
+
+.tong-quan-text {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 12px;
+
+    h3 {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+        color: #333;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 6px;
+    }
+
+    div {
+        font-size: 1rem;
+        margin-bottom: 8px;
+        color: #555;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        padding: 12px 12px;
+
+    }
+}
+
+.card {
+    margin: 24px 0 ;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: slideDownFadeIn 1s forwards;
+}
+
+@keyframes slideDownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); 
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); 
+  }
+}
