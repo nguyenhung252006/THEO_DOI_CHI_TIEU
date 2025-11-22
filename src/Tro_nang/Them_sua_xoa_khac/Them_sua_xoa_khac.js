@@ -11,6 +11,8 @@ import { API_BASE_URL, API_ENDPOINTS } from '../../config.js'
 
 //import ho tro 
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
+import chuyenNgay from "../../ho_tro/chuyen_ngay";
+
 
 //import component
 import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan, Xac_nhan_xoa as XacNhanXoa } from "../../alert";
@@ -21,6 +23,7 @@ import axios from "axios";
 //import state
 import { useState, useEffect, useRef } from "react";
 
+
 const cx = classNames.bind(style)
 function Them_sua_xoa({ id, onReload, onClose }) {
 
@@ -29,6 +32,8 @@ function Them_sua_xoa({ id, onReload, onClose }) {
 
     const [value1, setValue1] = useState(null)
     const [value2, setValue2] = useState(null)
+    const [value3, setValue3] = useState(null)
+    const [value3prev, setValue3prev] = useState(null)
 
     //state check out side 
     const wrapperRef = useRef(null);
@@ -64,11 +69,7 @@ function Them_sua_xoa({ id, onReload, onClose }) {
             await axios.put(`${API_ENDPOINTS.CHITIEUKHAC}/${id}`, dataPut, { withCredentials: true })
 
             setIsThanhCong(true)
-            setTimeout(() => {
-                setIsThanhCong(false)
-                if (onClose) onClose()
-            }, 1000)
-            if(onReload) onReload()
+            if (onReload) onReload()
         } catch (err) {
             console.error(err)
         }
@@ -88,7 +89,8 @@ function Them_sua_xoa({ id, onReload, onClose }) {
 
             setValue1(inputData[0].soTien)
             setValue2(inputData[0].tenKhoan)
-
+            setValue3(inputData[0].ngayTao)
+            setValue3prev(inputData[0].ngayTao)
             // check
             console.log(inputData)
         } catch (err) {
@@ -107,6 +109,16 @@ function Them_sua_xoa({ id, onReload, onClose }) {
         setValue2(value)
     }
 
+    const handleChangeValue3 = (e) => {
+        const value = e.target.value
+        if (!value) {
+            setValue3(value3prev)
+        }
+        else {
+            setValue3(value)
+        }
+    }
+
     //handle PUT API
     const handleSubmit = () => {
         const soTienPut = value1.toString().replace(/\./g, '')
@@ -114,6 +126,7 @@ function Them_sua_xoa({ id, onReload, onClose }) {
         const dataPut = {
             soTien: Number(soTienPut),
             tenKhoan: value2,
+            ngayTao: chuyenNgay(value3)
         }
         PutData(dataPut)
         setIsThanhCong(true)
@@ -159,8 +172,6 @@ function Them_sua_xoa({ id, onReload, onClose }) {
         };
     }, [onClose]);
 
-    console.log(value1)
-    console.log(value2)
 
     return (
         <>
@@ -173,6 +184,7 @@ function Them_sua_xoa({ id, onReload, onClose }) {
                 khac
                 soTien={value1}
                 ghiChu={value2}
+                ngayTao={value3}
                 notSubmit={handleNotIsCheck}
                 Submit={handleSubmit} />}
             {!isCheck && !! !isDelete && <div className={cx('wrapper')} ref={wrapperRef}>
@@ -189,6 +201,11 @@ function Them_sua_xoa({ id, onReload, onClose }) {
                         <input className={cx('input-layout')}
                             value={value2}
                             onChange={(e) => { handleChangeValue2(e) }}
+                        ></input>
+                        <label>Sửa Ngày tạo:</label>
+                        <input type="date" className={cx('input-layout')}
+                            value={value3}
+                            onChange={(e) => { handleChangeValue3(e) }}
                         ></input>
                         <button
                             onClick={handleIsCheck}

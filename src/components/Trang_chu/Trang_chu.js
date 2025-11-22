@@ -214,7 +214,7 @@ function Trang_chu() {
                             )}
 
                         </Card>
-                        <Card className={'wrapper-content'}>
+                        <Card className={'wrapper-content-lich-su-big'}>
                             {conLai > 0 && (<Bieu_do_cot
                                 anUong={Number(anUong) || 0}
                                 muaSam={Number(muaSam) || 0}

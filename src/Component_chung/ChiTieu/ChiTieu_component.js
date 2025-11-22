@@ -1,46 +1,48 @@
 import classNames from "classnames/bind";
-import style from './Muc_chi_tieu_khac.module.scss'
+import style from './ChiTieu_component.module.scss'
 
-//import component
-import ContentChiTieu from "../../../cong_cu/Text_chi_tieu/Text_chi_tieu";
-import { Them_sua_xoa_khac as ThemSuaXoa } from "../../../Tro_nang";
-import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan } from "../../../alert";
-import Card from "../../../cong_cu/Card/Card";
+
+// import component
+import ContentChiTieu from '../../cong_cu/Text_chi_tieu/Text_chi_tieu';
+import { Them_sua_xoa as ThemSuaXoa } from "../../Tro_nang";
+import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan } from "../../alert/index";
+import Card from "../../cong_cu/Card/Card";
 
 // import axios
 import axios from "axios"
 
 // import hook
 import { useState, useEffect } from "react";
-import { LoadingHook } from "../../../hook";
+import { LoadingHook } from "../../hook";
+
+//import API_BASE_URL
+import { API_BASE_URL, API_ENDPOINTS } from "../../config";
+
+//import ho tro 
+import chuyenNgay from "../../ho_tro/chuyen_ngay";
+import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
 //import icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
-//import API_BASE_URL
-import { API_BASE_URL, API_ENDPOINTS } from "../../../config";
-
-//import ho tro 
-import chuyenNgay from "../../../ho_tro/chuyen_ngay";
-import chuyenDinhDangTien from "../../../ho_tro/chuyen_dinh_dang_tien";
-
 const cx = classNames.bind(style)
-function Muc_chi_tieu_khac() {
+function ChiTieu_component({ enumChiTieu, tenChiTieu }) {
 
-    // lay id nguoi dung 
-    const UserId = localStorage.getItem('id')
+    //lay id nguoi dung
+    const UserId = localStorage.getItem("id")
 
-    //khai bao state
     const [soDu, setSoDu] = useState([])
     const [daDung, setDaDung] = useState([])
-
-
-    //lay phan tram
     const [phanTram, setPhanTram] = useState([])
+    const [ngayTao, setNgayTao] = useState([])
 
-    // lat thong bao
+    // state lay thong bao
     const [thongBao, setThongBao] = useState([])
+
+    // sate quan ly thong tin Post
+    const [soTien, setSoTien] = useState([])
+    const [ghiChu, setGhiChu] = useState(null)
 
     //state lay id
     const [id, setId] = useState('')
@@ -48,15 +50,24 @@ function Muc_chi_tieu_khac() {
     //state set chinh Them_sua_xoa
     const [isChinhSua, setIsChinhSua] = useState(false)
 
-    // sate quan ly thong tin Post
-    const [soTien, setSoTien] = useState([])
-    const [tenKhoan, seTenKhoan] = useState(null)
-    const [ngayTao, setNgayTao] = useState([])
-
     //state check da sua va da ThemSuaXoa
     const [isPost, setisPost] = useState(false)
 
-    // function handle
+    // Post du lieu giai tri
+    const Post = async (dataToPost) => {
+        try {
+            await axios.post(`${API_ENDPOINTS.CHITIEU}/${UserId}`, dataToPost, { withCredentials: true })
+            setSoTien('')
+            setGhiChu('')
+            setNgayTao('')
+            setisPost(true)
+
+            //set lai state
+            data()
+        } catch (error) { console.error('Post Error' + error) }
+    }
+
+    //function handle
     function handleChangeSoTien(e) {
         const inputValue = e.target.value
 
@@ -68,9 +79,8 @@ function Muc_chi_tieu_khac() {
         setSoTien(chuyenDinhDangTien(soTienChuaDinhDang))
     }
 
-    function handleChangeKhac(e) {
-        const value = e.target.value
-        seTenKhoan(value)
+    function handleChangeGhiChu(e) {
+        setGhiChu(e.target.value)
     }
 
     function handleChangeNgayTao(e) {
@@ -78,43 +88,44 @@ function Muc_chi_tieu_khac() {
     }
 
     function handleSubmit() {
+
         const soTienPost = soTien.toString().replace(/\./g, '')
 
         const dataPost = {
+            loaiChiTieu: enumChiTieu,
             soTien: Number(soTienPost),
-            tenKhoan: tenKhoan,
+            ghiChu: ghiChu,
             ngayTao: ngayTao
         }
-
+        
         if (!dataPost.soTien || Number(dataPost.soTien < 0)) { return }
-        PostChiTieuKhac(dataPost)
+        if (!dataPost.ghiChu || dataPost.ghiChu === '') { dataPost.ghiChu = "Không có ghi chú" }
+
+        Post(dataPost);
+
     }
 
-    // post du lieu
-    const PostChiTieuKhac = async (dataPost) => {
-        try {
-            await axios.post(`${API_ENDPOINTS.CHITIEUKHAC}/${UserId}`, dataPost, { withCredentials: true })
-            setSoTien('')
-            seTenKhoan('')
-            setNgayTao('')
-            setisPost(true)
-            dataMucChiTieuKhac()
-        } catch (error) {
-            console.error("Error : " + error)
-        }
+    //function lay id
+    const handleGetId = (id) => {
+        setId(id)
     }
 
-    const dataMucChiTieuKhac = async () => {
+    // function check Them_sua_xoa
+    function handleCheckChinhSua() {
+        setIsChinhSua(true)
+    }
+
+    //lay du lieu
+    const data = async () => {
         try {
             const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
 
-            //lay data cua muc chi tieu khac
-            const MucChiTieuKhac = res.data.chi_tieu_khac
-            const soTienMucChiTieuKhac = MucChiTieuKhac.map(item => item.soTien)
-            const daSuDungChiTieuKhac = soTienMucChiTieuKhac.reduce((a, b) => a + b, 0)
-            setDaDung(daSuDungChiTieuKhac)
-
-
+            // lay tong so tien an uong
+            const data = res.data.chi_tieu
+            const chiTieu = data.filter(item => item.loaiChiTieu === enumChiTieu)
+            const soTienDu = chiTieu.map(item => Number(item.soTien))
+            const daDung = soTienDu.reduce((a, b) => a + b, 0)
+            setDaDung(daDung)
 
             //lay thong tin tien dinh muc
             const dinhMucData = res.data.dinh_muc_chi_tieu
@@ -122,44 +133,28 @@ function Muc_chi_tieu_khac() {
             const tongSoTienDinhMuc = soTienDinhMuc.reduce((a, b) => a + b, 0)
             setSoDu(tongSoTienDinhMuc)
 
-
-            //lay thong bao
-            const dataThongBao = MucChiTieuKhac.map(item => ({
-                id: item.id,
+            // lay thong tin da them thong bao
+            const dataThongBao = chiTieu.map(item => ({
                 tien: item.soTien,
-                tenKhoan: item.tenKhoan,
+                ghiChu: item.ghiChu,
+                id: item.id,
+                ngayTao: item.ngayTao,
                 date: item.thoiGianNhap,
-                ngayTao: item.ngayTao
             }))
-            setThongBao(dataThongBao)
-
             //set lai isPost
             setTimeout(() => {
                 setisPost(false)
             }, 1000)
-
-            console.log(MucChiTieuKhac)
-        } catch (err) {
-            console.error('Error' + err)
-        }
-
+            setThongBao(dataThongBao)
+        } catch (error) { console.error('Loi khi lay API' + error) }
     }
 
-    //lay data
+    console.log(thongBao)
+
+    // lay data
     useEffect(() => {
-        dataMucChiTieuKhac()
+        data();
     }, [])
-
-    //function lay id
-    const handleGetId = (id) => {
-        setId(id)
-        console.log(id)
-    }
-
-    // function check Them_sua_xoa
-    function handleCheckChinhSua() {
-        setIsChinhSua(true)
-    }
 
     //tinh phan tram
     useEffect(() => {
@@ -177,21 +172,20 @@ function Muc_chi_tieu_khac() {
                 }}
             </LoadingHook>
             <div className={cx('wrapper')}>
-
                 <>
                     {isPost && <ThanhCong />}
 
                     {isChinhSua && (<ThemSuaXoa
-                        
+                        loaiChiTieu={enumChiTieu}
                         id={id}
-                        onReload={dataMucChiTieuKhac}
+                        onReload={data}
                         onClose={() => setIsChinhSua(false)}
                     />)}
                 </>
                 {<ContentChiTieu
-                    isKhac
+                    notKhac
                     nhapLieu={'Ghi chú ( nếu có )'}
-                    tenMuc={'Mục Khác'}
+                    tenMuc={tenChiTieu}
                     daSuDung={daDung}
                     PhanTramDaSuDung={phanTram}
                     lichSu={
@@ -204,12 +198,11 @@ function Muc_chi_tieu_khac() {
                                                 handleGetId(item.id)
                                                 handleCheckChinhSua();
                                             }}
-
                                         ><FontAwesomeIcon icon={faPenToSquare} /> | {chuyenDinhDangTien(item.tien)} VNĐ</span>
 
                                         <span>{chuyenNgay(item.ngayTao ? item.ngayTao : "@")}</span>
 
-                                        {item?.tenKhoan && <span>{item.tenKhoan}</span>}
+                                        {item?.ghiChu && <span>{item.ghiChu}</span>}
 
                                         <span>{chuyenNgay(item.date)}</span>
                                     </div>
@@ -226,18 +219,17 @@ function Muc_chi_tieu_khac() {
                             }}>*Chưa có lịch sử</span>
                         )
                     }
+                    onChangeGhiChu={handleChangeGhiChu}
                     onChangeSoTien={handleChangeSoTien}
-                    valueSoTien={soTien}
-                    valueKhac={tenKhoan}
-                    valueNgayTao={ngayTao}
-                    onSubmit={handleSubmit}
-                    onChangeKhac={handleChangeKhac}
                     onChangeNgayTao={handleChangeNgayTao}
+                    onSubmit={handleSubmit}
+                    valueGhiChu={ghiChu}
+                    valueSoTien={soTien}
+                    valueNgayTao={ngayTao}
                 />}
             </div>
         </>
     );
 }
 
-
-export default Muc_chi_tieu_khac
+export default ChiTieu_component;

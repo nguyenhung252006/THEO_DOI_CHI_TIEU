@@ -3,9 +3,10 @@ import style from './Xac_nhan.module.scss'
 
 //import ho tro
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
+import chuyenNgay from "../../ho_tro/chuyen_ngay";
 
 const cx = classNames.bind(style)
-function Xac_nhan({ soTien, ghiChu, Submit, notSubmit, chiTieu, dinhMuc, khac }) {
+function Xac_nhan({ soTien, ghiChu, ngayTao, Submit, notSubmit, chiTieu, dinhMuc, khac, isDinhMuc }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
@@ -22,6 +23,10 @@ function Xac_nhan({ soTien, ghiChu, Submit, notSubmit, chiTieu, dinhMuc, khac })
                     </div>}
                     {khac && <div className={cx('ghi-chu')}>
                         <span className={cx('key')} >Tên Khoản Chi: <span className={cx('value')}>{ghiChu}</span> </span>
+                    </div>
+                    }
+                    {!isDinhMuc && <div className={cx('ghi-chu')}>
+                        <span className={cx('key')} >Ngày Tạo: <span className={cx('value')}>{chuyenNgay(ngayTao)}</span> </span>
                     </div>}
                     <div className={cx('submit-wrapper')}>
                         <button onClick={notSubmit} className={cx('un-submit')}>Hủy Bỏ</button>

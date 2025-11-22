@@ -21,7 +21,7 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 
 const cx = classNames.bind(style)
-function Them_sua_xoa({ id, onReload, onClose }) {
+function Them_sua_xoa({ id, onReload, onClose , isDinhMuc}) {
 
     //lay id nguoi dung
     const UserId = localStorage.getItem('id')
@@ -161,6 +161,7 @@ function Them_sua_xoa({ id, onReload, onClose }) {
             />}
             {isThanhCong && <ThanhCong />}
             {isCheck && <XacNhan
+                isDinhMuc={isDinhMuc}
                 dinhMuc
                 soTien={value1}
                 ghiChu={value2}

@@ -18,8 +18,8 @@ const Bieu_do_tron = ({ dataCompare }) => {
         data={data}
         cx="50%" 
         cy="50%" 
-        innerRadius={60}
-        outerRadius={100}
+        innerRadius={40}
+        outerRadius={80}
         fill="#8884d8"
         paddingAngle={5} 
         dataKey="value"

@@ -9,7 +9,7 @@ import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
 const cx = classNames.bind(style)
 function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, notKhac, isKhac = false,
-    onChangeSoTien, onChangeGhiChu, onChangeKhac, onSubmit, valueSoTien, valueGhiChu, valueKhac
+    onChangeSoTien, onChangeGhiChu, onChangeKhac, onChangeNgayTao, onSubmit, valueSoTien, valueGhiChu, valueKhac, valueNgayTao
 }) {
     return (
         <>
@@ -34,7 +34,7 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, n
                             <div className={cx('content')}>
                                 <div className={cx('input-submit')}>
                                     <div>
-                                        <label htmlFor="so-tien"> nhập số tiền: </label>
+                                        <label htmlFor="so-tien"> Nhập số tiền: </label>
                                         <input className={cx('input-layout')} id="so-tien"
                                             onChange={onChangeSoTien}
                                             value={valueSoTien}
@@ -57,6 +57,13 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, n
                                                 ></input>
                                             </>
                                         )}
+                                        <label htmlFor="ngay-tao"> Ngày Tạo: </label>
+                                        <input className={cx('input-layout')} id="ngay-tao"
+                                            placeholder="dd/mm/yyyy"
+                                            type="date"
+                                            onChange={onChangeNgayTao}
+                                            value={valueNgayTao}
+                                        ></input>
                                         <button className={cx('btn-submit')}
                                             onClick={onSubmit}
                                         >Xác Nhận</button>

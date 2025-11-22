@@ -136,8 +136,8 @@ function Dinh_muc() {
             setLichSu(dataLichSu)
 
             //lay so tien dinh muc
-            const tienDinhMuc = dataDinhMuc.map(item => Number(item.soTienDinhMuc))
-            const tongTienDinhMuc = tienDinhMuc.reduce((a, b) => a + b, 0)
+            const tienDinhMucArr = dataDinhMuc.map(item => Number(item.soTienDinhMuc))
+            const tongTienDinhMuc = tienDinhMucArr.reduce((a, b) => a + b, 0)
             setTienDinhMuc(tongTienDinhMuc)
 
             //lay so ngay
@@ -157,15 +157,18 @@ function Dinh_muc() {
             }, 1000)
 
             //trong chi tieu
+
             const dataTienDaDungChiTieu = res.data.chi_tieu
             const soTienDaDungChiTieu = dataTienDaDungChiTieu.map(item => Number(item.soTien))
-            setTienDaDung([...soTienDaDungChiTieu, ...soTienDaDungKhac].reduce((a, b) => a + b, 0))
+            const soTienDaDungArr = [...soTienDaDungChiTieu, ...soTienDaDungKhac]
+            setTienDaDung(soTienDaDungArr.reduce((a, b) => a + b, 0))
 
 
         } catch (err) {
             console.error("Error: " + err)
         }
     }
+
     // lay data
     useEffect(() => {
         dataDinhMuc()
@@ -209,14 +212,14 @@ function Dinh_muc() {
             setGoiY(
                 <div>
                     <span style={{ color: 'green' }}>
-                        Bạn nên sử dụng {chuyenDinhDangTien(Math.abs(tienConLai))} VNĐ / Ngày
+                        Bạn nên sử dụng {chuyenDinhDangTien(Math.abs(tiLeChiTieu))} VNĐ / Ngày
                     </span>
                 </div>
             );
         } else {
             setGoiY(null);
         }
-    }, [tienConLai]);
+    }, [tiLeChiTieu]);
 
 
     return (
@@ -226,16 +229,18 @@ function Dinh_muc() {
                     console.log("API data:", data)
                 }}
             </LoadingHook>
-            {isPost && <ThanhCong />}
+            {isPost && <ThanhCong
+            />}
             <h1 className={cx('wrapper-text-content')}>Định mức chi tiêu</h1>
             {isChinhSua && (<ThemSuaXoa
+                isDinhMuc
                 loaiChiTieu="MUA_SAM"
                 id={id}
                 onReload={dataDinhMuc}
                 onClose={() => setIsChinhSua(false)}
             />)}
             <div className={cx('wrapper')}>
-                
+
                 <Card className={'wrapper-content-dinh-muc'}>
                     <div className={cx('content')}>
                         <div className={cx('wrapper-input')}>

@@ -11,6 +11,7 @@ import { API_BASE_URL, API_ENDPOINTS } from '../../config.js'
 
 //import ho tro 
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
+import chuyenNgay from "../../ho_tro/chuyen_ngay";
 
 //import axios
 import axios from "axios";
@@ -21,14 +22,17 @@ import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan, Xac_nhan_xoa as XacNhanXo
 //import state
 import { useState, useEffect, useRef } from "react";
 
+
 const cx = classNames.bind(style)
-function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
+function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose, isDinhMuc }) {
 
     //lay id nguoi dung 
     const UserId = localStorage.getItem('id')
 
     const [value1, setValue1] = useState(null)
     const [value2, setValue2] = useState(null)
+    const [value3, setValue3] = useState(null)
+    const [value3prev, setValue3prev] = useState(null)
 
     //state check out side 
     const wrapperRef = useRef(null);
@@ -66,7 +70,7 @@ function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
                 setIsThanhCong(false)
                 if (onClose) onClose()
             }, 1000)
-            if(onReload) onReload()
+            if (onReload) onReload()
         } catch (err) {
             console.error(err)
         }
@@ -89,6 +93,11 @@ function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
 
             setValue1(inputData[0].soTien)
             setValue2(inputData[0].ghiChu)
+            setValue3(inputData[0].ngayTao)
+            setValue3prev(inputData[0].ngayTao)
+
+            console.log(inputData)
+
 
             // check
             console.log(inputData)
@@ -106,6 +115,16 @@ function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
     const handleChangeValue2 = (e) => {
         const value = e.target.value
         setValue2(value)
+    }
+
+    const handleChangeValue3 = (e) => {
+        const value = e.target.value
+        if (!value) {
+            setValue3(value3prev)
+        }
+        else {
+            setValue3(value)
+        }
     }
 
     //handle hien thi bang xac nhan
@@ -133,6 +152,7 @@ function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
             loaiChiTieu: loaiChiTieu,
             soTien: Number(soTienPut),
             ghiChu: value2,
+            ngayTao: chuyenNgay(value3)
         }
         PutData(dataPut)
         setIsThanhCong(true)
@@ -161,8 +181,7 @@ function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
         };
     }, [onClose]);
 
-    console.log(value1)
-    console.log(value2)
+    console.log(value3)
 
     return (
         <>
@@ -172,9 +191,11 @@ function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
             />}
             {isThanhCong && <ThanhCong />}
             {isCheck && <XacNhan
+                isDinhMuc={isDinhMuc}
                 chiTieu
                 soTien={value1}
                 ghiChu={value2}
+                ngayTao={value3}
                 notSubmit={handleNotIsCheck}
                 Submit={handleSubmit} />}
             {!isCheck && !! !isDelete && <div className={cx('wrapper')} ref={wrapperRef}>
@@ -191,6 +212,11 @@ function Them_sua_xoa({ id, loaiChiTieu, onReload, onClose }) {
                         <input className={cx('input-layout')}
                             value={value2}
                             onChange={(e) => { handleChangeValue2(e) }}
+                        ></input>
+                        <label>Sửa ngày tạo:</label>
+                        <input type="date" className={cx('input-layout')}
+                            value={value3}
+                            onChange={(e) => { handleChangeValue3(e) }}
                         ></input>
                         <button
                             onClick={() => { handleIsCheck() }}

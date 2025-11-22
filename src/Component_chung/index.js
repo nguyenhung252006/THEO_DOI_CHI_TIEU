@@ -1,0 +1,1 @@
+export {default as ChiTieu_component} from './ChiTieu/ChiTieu_component'
