@@ -126,6 +126,22 @@ label {
     width: 100%;
 }
 
+.filter-icon {
+    position: fixed;
+    top: 64px;
+    right: 20px;
+    z-index: 2000;
+    cursor: pointer;
+
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    svg {
+        font-size: 16px;
+    }
+}
+
 @keyframes gradientMove {
     0% {
         background-position: 0% 50%;

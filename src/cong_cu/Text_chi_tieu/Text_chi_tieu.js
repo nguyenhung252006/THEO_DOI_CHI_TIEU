@@ -3,16 +3,44 @@ import style from './Text_chi_tieu.module.scss'
 
 //import component
 import Card from "../Card/Card";
+import { Loc } from "../../alert";
+
 
 // import ho tro  
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
+//import hook
+import { useState } from "react";
+
+//import icon 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilterCircleDollar } from "@fortawesome/free-solid-svg-icons";
+
 const cx = classNames.bind(style)
 function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, notKhac, isKhac = false,
-    onChangeSoTien, onChangeGhiChu, onChangeKhac, onChangeNgayTao, onSubmit, valueSoTien, valueGhiChu, valueKhac, valueNgayTao
+    onChangeSoTien, onChangeGhiChu, onChangeKhac, onChangeNgayTao, onSubmit, valueSoTien, valueGhiChu, valueKhac, valueNgayTao, loaiChiTieu
 }) {
+
+    //checkFilter
+    const [isFilter, setIsFilter] = useState(false)
+
+    //handel check active filter
+    const handleFilter = () => {
+        setIsFilter(true)
+    }
+
     return (
         <>
+            <div className={cx('filter-icon')}>
+                <div>
+                    <FontAwesomeIcon className="icon-filter" onClick={() => { handleFilter() }} icon={faFilterCircleDollar} />
+                </div>
+            </div>
+            {isFilter && (
+                <div className={cx('bang-loc')}>
+                    <Loc loaiChiTieu={loaiChiTieu} onClose={() => setIsFilter(false)} />
+                </div>
+            )}
             <div className={cx('wrapper-page')}>
                 <div>
                     <Card className={'wrapper-content'}>
@@ -73,7 +101,6 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, n
                         </div>
                     </Card>
                 </div>
-
                 <Card className={'wrapper-content'}>
                     <div className={cx('thong-bao')}>
                         {lichSu}

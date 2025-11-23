@@ -8,6 +8,7 @@ import { Them_sua_xoa as ThemSuaXoa } from "../../Tro_nang";
 import { Thanh_cong as ThanhCong, Xac_nhan as XacNhan } from "../../alert/index";
 import Card from "../../cong_cu/Card/Card";
 
+
 // import axios
 import axios from "axios"
 
@@ -27,7 +28,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(style)
-function ChiTieu_component({ enumChiTieu, tenChiTieu }) {
+function ChiTieu_component({ enumChiTieu, tenChiTieu, loaiChiTieu }) {
 
     //lay id nguoi dung
     const UserId = localStorage.getItem("id")
@@ -97,7 +98,7 @@ function ChiTieu_component({ enumChiTieu, tenChiTieu }) {
             ghiChu: ghiChu,
             ngayTao: ngayTao
         }
-        
+
         if (!dataPost.soTien || Number(dataPost.soTien < 0)) { return }
         if (!dataPost.ghiChu || dataPost.ghiChu === '') { dataPost.ghiChu = "Không có ghi chú" }
 
@@ -149,8 +150,6 @@ function ChiTieu_component({ enumChiTieu, tenChiTieu }) {
         } catch (error) { console.error('Loi khi lay API' + error) }
     }
 
-    console.log(thongBao)
-
     // lay data
     useEffect(() => {
         data();
@@ -183,6 +182,7 @@ function ChiTieu_component({ enumChiTieu, tenChiTieu }) {
                     />)}
                 </>
                 {<ContentChiTieu
+                    loaiChiTieu={loaiChiTieu}
                     notKhac
                     nhapLieu={'Ghi chú ( nếu có )'}
                     tenMuc={tenChiTieu}
