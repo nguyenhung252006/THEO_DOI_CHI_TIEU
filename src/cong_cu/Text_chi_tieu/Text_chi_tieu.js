@@ -3,7 +3,7 @@ import style from './Text_chi_tieu.module.scss'
 
 //import component
 import Card from "../Card/Card";
-import { Loc } from "../../alert";
+import { Loc, LocKhac } from "../../alert";
 
 
 // import ho tro  
@@ -36,10 +36,19 @@ function Text_chi_tieu({ tenMuc, daSuDung, PhanTramDaSuDung, lichSu, nhapLieu, n
                     <FontAwesomeIcon className="icon-filter" onClick={() => { handleFilter() }} icon={faFilterCircleDollar} />
                 </div>
             </div>
-            {isFilter && (
-                <div className={cx('bang-loc')}>
-                    <Loc loaiChiTieu={loaiChiTieu} onClose={() => setIsFilter(false)} />
-                </div>
+            {isFilter && notKhac && (
+                <>
+                    <div className={cx('bang-loc')}>
+                        <Loc loaiChiTieu={loaiChiTieu} onClose={() => setIsFilter(false)} />
+                    </div>
+                </>
+            )}
+            {isFilter && isKhac && (
+                <>
+                    <div className={cx('bang-loc')}>
+                        <LocKhac loaiChiTieu={loaiChiTieu} onClose={() => setIsFilter(false)} />
+                    </div>
+                </>
             )}
             <div className={cx('wrapper-page')}>
                 <div>

@@ -117,7 +117,7 @@ function Create() {
 
     //function check isNext
     const handleIsNext = () => {
-        if (checkTaiKhoan || !(matKhau === checkMatKhau) || taiKhoan === "" || matKhau === "" || taiKhoan.length < 6 || matKhau.length < 6) {
+        if (checkTaiKhoan || !(matKhau === checkMatKhau) || taiKhoan === "" || matKhau === "" || matKhau.length < 6) {
             setIsRight(true)
             return
         }

@@ -119,10 +119,10 @@ function Tong_quan() {
     return (
         <>
             <LoadingHook apiUrl={`${API_ENDPOINTS.USERS}/${UserId}`}>
-                    {(data) => {
-                        console.log("API data:", data)
-                    }}
-                </LoadingHook>
+                {(data) => {
+                    console.log("API data:", data)
+                }}
+            </LoadingHook>
             <div className={cx('wrapper')}>
                 <h1>Đánh giá tổng quan</h1>
                 <Card className={'wrapper-content'}>
@@ -167,64 +167,48 @@ function Tong_quan() {
                     </div>
                 </Card>
                 <br></br>
-                <h1>Biểu đồ</h1>
+                {conLai > 0 ? (<h1>Biểu đồ</h1>) : (<></>)}
                 <div className={cx('wrapper-bieu-do')}>
-                    <Card className={'wrapper-content'}>
-                        {conLai > 0 && (<Bieu_do_cot
-                            anUong={Number(anUong) || 0}
-                            muaSam={Number(muaSam) || 0}
-                            giaiTri={Number(giaiTri) || 0}
-                            khac={Number(khac) || 0}
-                            dinhMuc={Number(soDu) || 0}
-                        />)}
-    
-                        {conLai < 0 && (
-                            <>
-                                <div className={cx('warning')}>
-                                    <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
-                                </div>
-                            </>
-                        )}
-    
-                        {(!conLai && !soDu && !daSuDung) && (
-                            <span style={{
-                                display: "block",
-                                textAlign: "center",
-                                marginTop: "12px",
-                                color: "#888",
-                                fontStyle: "italic",
-                                fontSize: "14px",
-                            }}>*Chưa có dữ liệu</span>
-                        )}
-    
-                    </Card>
-                    <Card className={'wrapper-content'}>
-                        {conLai > 0 && (<BieuDo
-                            dataCompare={[
-                                { name: 'Chi tiêu', value1: daSuDung, value2: (conLai) }
-                            ]}
-                        />)}
-    
-                        {conLai < 0 && (
-                            <>
-                                <div className={cx('warning')}>
-                                    <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
-                                </div>
-                            </>
-                        )}
-    
-                        {(!conLai && !soDu && !daSuDung) && (
-                            <span style={{
-                                display: "block",
-                                textAlign: "center",
-                                marginTop: "12px",
-                                color: "#888",
-                                fontStyle: "italic",
-                                fontSize: "14px",
-                            }}>*Chưa có dữ liệu</span>
-                        )}
-    
-                    </Card>
+                    {conLai > 0 && <Card className={'wrapper-content'}>
+                        <div>
+                            {conLai > 0 && (<Bieu_do_cot
+                                anUong={Number(anUong) || 0}
+                                muaSam={Number(muaSam) || 0}
+                                giaiTri={Number(giaiTri) || 0}
+                                khac={Number(khac) || 0}
+                                dinhMuc={Number(soDu) || 0}
+                            />)}
+
+                            {(!conLai && !soDu && !daSuDung) && (
+                                <span style={{
+                                    display: "block",
+                                    textAlign: "center",
+                                    marginTop: "12px",
+                                    color: "#888",
+                                    fontStyle: "italic",
+                                    fontSize: "14px",
+                                }}>*Chưa có dữ liệu</span>
+                            )}
+                        </div>
+                        <div>
+                            {conLai > 0 && (<BieuDo
+                                dataCompare={[
+                                    { name: 'Chi tiêu', value1: daSuDung, value2: (conLai) }
+                                ]}
+                            />)}
+                            {(!conLai && !soDu && !daSuDung) && (
+                                <span style={{
+                                    display: "block",
+                                    textAlign: "center",
+                                    marginTop: "12px",
+                                    color: "#888",
+                                    fontStyle: "italic",
+                                    fontSize: "14px",
+                                }}>*Chưa có dữ liệu</span>
+                            )}
+                        </div>
+                    </Card>}
+                    
                 </div>
             </div>
         </>

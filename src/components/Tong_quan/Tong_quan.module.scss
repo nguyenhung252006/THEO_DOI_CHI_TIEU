@@ -16,6 +16,7 @@
         >div {
             margin: 12px 12px;
             font-weight: 600;
+
             >span {
                 color: green;
                 font-weight: 600;
@@ -27,7 +28,19 @@
 
 .wrapper-bieu-do {
     display: flex;
-    width: 100%;
+    width: 102%;
+
+    >div {
+        padding: 24px 24px;
+
+        >div:nth-child(1) {
+            margin-left: 24px;
+        }
+
+        >div:nth-child(2) {
+            margin-right: 24px;
+        }
+    }
 }
 
 .tong-quan-text {
@@ -55,4 +68,8 @@
         padding: 12px 12px;
 
     }
+}
+
+.canh-bao {
+    margin-left: 40%;
 }

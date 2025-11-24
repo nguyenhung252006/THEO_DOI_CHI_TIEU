@@ -182,27 +182,13 @@ function Trang_chu() {
                         <Card>
                             {profile?.hoTen && profile?.email && <TextProfile
                                 name={profile.hoTen}
+                                id={profile.id}
                                 email={profile.email}
-                                soDu={soDu}
-                                daSuDung={daSuDung}
+                                sdt={profile.soDienThoai}
                             />}
                         </Card>
-                        <Card className={'wrapper-content'}>
-                            {conLai > 0 && (<BieuDo
-                                dataCompare={[
-                                    { name: 'Chi tiêu', value1: daSuDung, value2: (conLai) }
-                                ]}
-                            />)}
-
-                            {conLai < 0 && (
-                                <>
-                                    <div className={cx('warning')}>
-                                        <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
-                                    </div>
-                                </>
-                            )}
-
-                            {(!conLai && !soDu && !daSuDung) && (
+                        {conLai === 0 &&
+                            <Card className={'wrapper-square'}>
                                 <span style={{
                                     display: "block",
                                     textAlign: "center",
@@ -210,39 +196,35 @@ function Trang_chu() {
                                     color: "#888",
                                     fontStyle: "italic",
                                     fontSize: "14px",
-                                }}>*Chưa có dữ liệu</span>
-                            )}
+                                }}>*Bạn đã đạt đến định mức
+                                </span>
+                            </Card>
+                        }
 
-                        </Card>
-                        <Card className={'wrapper-content-lich-su-big'}>
-                            {conLai > 0 && (<Bieu_do_cot
-                                anUong={Number(anUong) || 0}
-                                muaSam={Number(muaSam) || 0}
-                                giaiTri={Number(giaiTri) || 0}
-                                khac={Number(khac) || 0}
-                                dinhMuc={Number(soDu) || 0}
-                            />)}
-
-                            {conLai < 0 && (
+                        {conLai < 0 && (
+                            <Card className={'wrapper-square'}>
                                 <>
                                     <div className={cx('warning')}>
                                         <span>Bạn đã tiêu vượt mức {chuyenDinhDangTien(Math.abs(conLai))} VNĐ</span>
                                     </div>
                                 </>
-                            )}
+                            </Card>
+                        )}
 
-                            {(!conLai && !soDu && !daSuDung) && (
-                                <span style={{
-                                    display: "block",
-                                    textAlign: "center",
-                                    marginTop: "12px",
-                                    color: "#888",
-                                    fontStyle: "italic",
-                                    fontSize: "14px",
-                                }}>*Chưa có dữ liệu</span>
-                            )}
+                        {conLai > 0 && (<Bieu_do_cot
+                            anUong={Number(anUong) || 0}
+                            muaSam={Number(muaSam) || 0}
+                            giaiTri={Number(giaiTri) || 0}
+                            khac={Number(khac) || 0}
+                            dinhMuc={Number(soDu) || 0}
+                        />)}
+                        
+                        {conLai > 0 && (<BieuDo
+                            dataCompare={[
+                                { name: 'Chi tiêu', value1: daSuDung, value2: (conLai) }
+                            ]}
+                        />)}
 
-                        </Card>
                     </div>
                 </Card>
             </div>

@@ -3,6 +3,10 @@
     flex-direction: column;
     margin: 24px 24px;
     overflow: hidden;
+
+    >h1 {
+        margin: 0 24px;
+    }
 }
 
 .wrapper-content {
@@ -35,6 +39,20 @@
     flex-direction: row;
     user-select: none;
     overflow-x: hidden;
+
+    >div:nth-child(1) {
+        >h1 {
+            margin-left: 24px;
+        }
+    }
+
+    >div:nth-child(2) {
+        margin-left: 180px;
+
+        >h1 {
+            margin-left: 24px;
+        }
+    }
 }
 
 .primary {
@@ -50,6 +68,6 @@
 
 }
 
-.margin-content{
+.margin-content {
     margin: 12px 12px;
 }

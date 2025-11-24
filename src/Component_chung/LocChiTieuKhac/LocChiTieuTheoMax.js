@@ -34,7 +34,7 @@ function LocChiTieuTheoMax({ loaiChiTieu, Max, isCLose }) {
     const Data = async () => {
         try {
             const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
-            const dataChiTieu = res.data.chi_tieu
+            const dataChiTieu = res.data.chi_tieu_khac
             const dataMucChiTieu = dataChiTieu.filter(item => item.loaiChiTieu === loaiChiTieu && item.soTien <= Max.replace(/\./g, ''))
             const listMucChiTieu = dataMucChiTieu.map(item => ({
                 tien: item.soTien,

@@ -19,7 +19,7 @@ import chuyenNgay from "../../ho_tro/chuyen_ngay";
 import chuyenDinhDangTien from "../../ho_tro/chuyen_dinh_dang_tien";
 
 const cx = classNames.bind(style)
-function LocChiTieuTheoMax({ loaiChiTieu, Max, isCLose }) {
+function LocChiTieuTheoGhiChu({ loaiChiTieu, GhiChu, isCLose }) {
 
     //lay id cua nguoi dung
     const UserId = localStorage.getItem('id')
@@ -34,8 +34,8 @@ function LocChiTieuTheoMax({ loaiChiTieu, Max, isCLose }) {
     const Data = async () => {
         try {
             const res = await axios.get(`${API_ENDPOINTS.USERS}/${UserId}`, { withCredentials: true })
-            const dataChiTieu = res.data.chi_tieu
-            const dataMucChiTieu = dataChiTieu.filter(item => item.loaiChiTieu === loaiChiTieu && item.soTien <= Max.replace(/\./g, ''))
+            const dataChiTieu = res.data.chi_tieu_khac
+            const dataMucChiTieu = dataChiTieu.filter(item => item.loaiChiTieu === loaiChiTieu && item.ghiChu === GhiChu)
             const listMucChiTieu = dataMucChiTieu.map(item => ({
                 tien: item.soTien,
                 ghiChu: item.ghiChu,
@@ -58,13 +58,13 @@ function LocChiTieuTheoMax({ loaiChiTieu, Max, isCLose }) {
 
     useEffect(() => {
         Data()
-    }, [Max])
+    }, [GhiChu])
 
     console.log(lichSu)
 
     return (
         <>
-            {Max !== "" && lichSu.length > 0 && isOpen && !isCLose && <div className={cx('wrapper')}>
+            {lichSu.length > 0 && isOpen && !isCLose && <div className={cx('wrapper')}>
                 {
                     <>
                         {lichSu.map(item => (
@@ -86,4 +86,4 @@ function LocChiTieuTheoMax({ loaiChiTieu, Max, isCLose }) {
     );
 }
 
-export default LocChiTieuTheoMax;
+export default LocChiTieuTheoGhiChu;

@@ -60,14 +60,14 @@ function Thong_tin() {
                 return {
                     loaiChiTieu: item.loaiChiTieu,
                     tien: Number(item.soTien),
-                    date: item.thoiGianNhap,
+                    date: item.ngayTao,
                 }
             })
 
             const mucChiTieuDauRaKhac = res.data.chi_tieu_khac.map(item => {
                 return {
                     tien: item.soTien,
-                    date: item.thoiGianNhap,
+                    date: item.ngayTao,
                     loaiChiTieu: item.tenKhoan,
                 }
             })
@@ -108,8 +108,7 @@ function Thong_tin() {
                             {profile?.hoTen && profile?.email && <TextProfile
                                 name={profile.hoTen}
                                 email={profile.email}
-                                soDu={soDu}
-                                daSuDung={daSuDung}
+                                sdt={profile.soDienThoai}
                             />}
                         </>
                     </div>
@@ -122,8 +121,6 @@ function Thong_tin() {
                             id={profile.id}
                             sdt={profile.soDienThoai}
                             email={profile.email}
-                            soDu={soDu}
-                            daSuDung={daSuDung}
                         />}
                     </div>
                 </Card>
